@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { View, Text } from "react-native";
 
 const Nutrition = () => {
   return (
-    <div>Nutrition</div>
-  )
-}
+    <View>
+      <Text>Nutrition</Text>
+    </View>
+  );
+};
 
-export default Nutrition
+export default Nutrition;

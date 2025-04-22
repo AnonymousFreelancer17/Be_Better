@@ -1,12 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-const Schedule = () => {
+const login = () => {
   return (
     <View>
-      <Text>Schedule</Text>
+      <Text>login</Text>
     </View>
   );
 };
 
-export default Schedule;
+export default login;

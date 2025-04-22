@@ -1,8 +1,9 @@
 import React from 'react'
+import { Text, View } from 'react-native'
 
 const Profile = () => {
   return (
-    <div>Profile</div>
+    <View><Text>Profile</Text></View>
   )
 }
 
