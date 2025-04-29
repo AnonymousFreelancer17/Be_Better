@@ -1,60 +1,30 @@
-import { Button, Text, View } from "react-native";
-import React , {useEffect} from "react";
-import { Link, useRouter } from "expo-router";
-
-//  redux
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { increment,decrement } from '../../store/slices/exampleSlice';
-import Login from "../auth/login";
-
+import { useEffect } from "react";
+import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { View, Text, ScrollView } from "react-native";
+import { RootState } from "../../store/store";
+import Header from "../components/Header";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ImageUploader from "../components/ImageUploader";
 
 export default function Index() {
-
-  const count = useSelector((state: RootState) => state.example.count);
-  const dispatch = useDispatch();
   const router = useRouter();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const { isAuthenticated, token } = useSelector(
+    (state: RootState) => state.auth
   );
-
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const timeout = setTimeout(() => {
-        router.push('/'); 
-      }, 0);
-      return ()=> clearTimeout(timeout)
-    } else {
-      const timeout = setTimeout(() => {
-        router.push('/auth/login');  
-      }, 0);  
-      return ()=> clearTimeout(timeout)
-    }    
-  }, []);
+  const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-    <View className="flex flex-1 justify-center items-center bg-primary">
-      {/* <Text className="text-white">
-        Edit app/index.tsx to edit this screen.
-      </Text>
-
-      <Link className="text-red-400" href="/auth/register">
-        Register
-      </Link>
-      <Link className="text-red-400" href="/auth/login">
-        Login
-      </Link>
-
-      <View>
-      <Text className="text-white">Count: {count}</Text>
-      <Button title="Increment" onPress={() => dispatch(increment())} />
-      <Button title="Decrement" onPress={() => dispatch(decrement())} />
-    </View> */}
-
-
-    
-
-    </View>
+    <SafeAreaView
+      className={`flex-1 w-screen flex justify-start items-center ${
+        !lightTheme ? "bg-primary" : "bg-[#eeeeee]"
+      }`}
+    >
+      <ScrollView className="w-full flex-1">
+        <Header />
+        <Text className="text-red-400">Hello</Text>
+        <ImageUploader />
+      </ScrollView>
+    </SafeAreaView>
   );
 }

@@ -11,8 +11,8 @@ const _layout = () => {
         },
       }}
     >
-      <Tabs.Screen name="register"  />
-      <Tabs.Screen name="login" />
+      <Tabs.Screen name="register" />
+      <Tabs.Screen name="Login" />
     </Tabs>
   );
 };

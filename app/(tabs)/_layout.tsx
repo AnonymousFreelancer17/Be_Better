@@ -1,9 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import Header from "../components/Header";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const _layout = () => {
+
+  const { isAuthenticated } = useSelector((state:RootState) => state.auth);
+  if (!isAuthenticated) {
+    return <Redirect href="/auth/Login" />;
+  }
+
+
   return (
     <Tabs
       screenOptions={{

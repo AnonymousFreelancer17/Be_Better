@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, Slot } from "expo-router";
 import "../global.css";
 import { store, persistor } from "../store/store";
 import { Provider } from "react-redux";
@@ -10,9 +10,10 @@ export default function RootLayout() {
       <PersistGate loading={null} persistor={persistor}>
         <Stack
           screenOptions={{
-            headerShown: false,
+            headerShown: true,
           }}
         >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="auth" options={{ headerShown: false }} />
         </Stack>
