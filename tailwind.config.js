@@ -19,7 +19,7 @@ module.exports = {
         },
         dark: {
           background: "#0F172A",
-          surface: "#1E293B",
+          surface: "#334155",
           primary: "#3B82F6",
           primaryText: "#F3F4F6",
           secondaryText: "#94A3B8",

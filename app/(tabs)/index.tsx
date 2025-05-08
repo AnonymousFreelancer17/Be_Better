@@ -23,26 +23,27 @@ export default function Index() {
       }`}
     >
       <ScrollView className="w-full flex-1">
-        <Header />
+        <Header route={"Home"} />
         <View className="w-full flex-1 flex flex-col justify-center items-center">
           <View
-            className="w-11/12 h-[150px] rounded-lg flex justify-center items-center bg-gray-400 relative mt-4"
+            className={`w-11/12 h-[150px] rounded-lg flex justify-center items-center relative my-4 ${lightTheme ? "bg-light-surface" : "bg-dark-surface"}`}
             ref={motivation}
           >
             <Text
               className={`${
-                lightTheme ? "text-[#eeeeee]" : "text-black"
+                lightTheme ? "text-black" : "text-white"
               } relative`}
             >
-              Hi {user.name}, Ready to crush your goals today?
+              Hi {user?.name},
+               Ready to crush your goals today?
             </Text>
             <Pressable
-              className="absolute top-0 right-0 z-10"
+              className="absolute top-0 right-0 z-10 m-2 p-2"
               onPress={() => {
                 motivation.current;
               }}
             >
-              {lightTheme ? (
+              {!lightTheme ? (
                 <Image
                   source={require("../../assets/images/close-light.png")}
                 />
@@ -50,6 +51,14 @@ export default function Index() {
                 <Image source={require("../../assets/images/close_dark.png")} />
               )}
             </Pressable>
+          </View>
+
+          <View className="w-11/12 h-[300px] flex flex-row justify-center items-center flex-wrap">
+            {[[1,2,3],[1,2],[1,2],[1,2,3]]?.map((d,index)=>{
+              return <View key={index} className={`w-[43vw] h-[48%] ${lightTheme ? "bg-light-surface" : "bg-dark-surface"} m-1 flex justify-center items-center rounded-md`}>
+                 <Text className={`${lightTheme ? "text-black" : "text-white" }`}>Box {index}</Text>
+              </View>
+            })}
           </View>
         </View>
       </ScrollView>

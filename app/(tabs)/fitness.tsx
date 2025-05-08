@@ -129,7 +129,7 @@ const Fitness = () => {
 
   return (
     <View className="w-screen h-screen flex-1 bg-primary flex justify-center items-center">
-      <Header />
+      <Header route={"Fitness"} />
       <View className="w-full h-full flex-1 flex flex-col justify-start items-center">
         <View className="h-[60px] w-screen flex justify-center items-center bg-red-400">
           <Text className="font-medium text-lg text-white">

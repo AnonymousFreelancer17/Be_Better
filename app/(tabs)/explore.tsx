@@ -5,19 +5,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import ImageUploader from "../components/ImageUploader";
 
-const Profile = () => {
+const Explore = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
     <View
       className={`${!lightTheme ? "bg-primary" : "bg-[#eeeeee]"} flex-1 flex flex-col justify-start items-center`}
     >
-      <Header />
+      <Header route={"Explore"} />
       <View className="w-full f">
-        <ImageUploader />
+        {/* <ImageUploader /> */}
       </View>
     </View>
   );
 };
 
-export default Profile;
+export default Explore;
