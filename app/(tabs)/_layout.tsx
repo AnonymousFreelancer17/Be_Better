@@ -12,25 +12,33 @@ const _layout = () => {
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      if (!token) return;
+  
       try {
         const res = await axios.post(
           `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/getUserDetails`,
-          {token},
+          {},
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        console.log("User details:", res.data);
-        // dispatch(fetchUserInfo(res.data));
+        dispatch(fetchUserInfo({
+          id: res.data.data._id,
+          name: res.data.data.userName,
+          email: res.data.data.email,
+          profilePic: res.data.data.profilePic,
+        }));
+        
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
     };
-
+  
     fetchUserDetails();
-  }, [token, user, dispatch]);
+  }, [token, dispatch]);
+  
 
   if (!isAuthenticated) {
     return <Redirect href="/auth/login" />;
@@ -55,6 +63,16 @@ const _layout = () => {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome size={24} name="home" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: "Explore",
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="compass" size={24} color={color} />
           ),
         }}
       />
@@ -88,16 +106,7 @@ const _layout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={24} color={color} />
-          ),
-        }}
-      />
+      
     </Tabs>
   );
 };

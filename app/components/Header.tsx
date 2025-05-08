@@ -11,11 +11,9 @@ import {
 import { router } from "expo-router";
 import NotificationModal from "./NotificationModal";
 
-type HeaderProps = {
-  lightTheme: boolean;
-};
+import { RouteProp } from "@react-navigation/native";
 
-const Header = () => {
+const Header = ({ route }: { route: any }) => {
   const dispatch = useDispatch();
   const { isLoading, isAuthenticated, token, user } = useSelector(
     (state: RootState) => state.auth
@@ -33,8 +31,8 @@ const Header = () => {
             : "bg-dark-background border-b border-dark-border"
         }`}
       >
-        <View className="w-11/12 flex flex-row justify-center items-center">
-          <View className="flex-1">
+        <View className="w-11/12 flex flex-row justify-start items-center">
+          <View className="flex-1 flex flex-row justify-center items-center">
             <Pressable
               className="w-[40px] h-[40px] flex flex-col justify-center items-center"
               onPress={() => {}}
@@ -45,8 +43,17 @@ const Header = () => {
                 <Image source={require("../../assets/images/Vector.png")} />
               )}
             </Pressable>
+            <View className="flex-1 justify-center items-center">
+              <Text
+                className={`font-medium  ${
+                  lightTheme ? "text-black" : "text-white"
+                }`}
+              >
+                {route}
+              </Text>
+            </View>
           </View>
-          <View className="w-[35%] flex flex-row justify-end items-center relative">
+          <View className="w-[25%] flex flex-row justify-end items-center relative">
             <Pressable
               className="h-[50px] flex justify-center items-center relative me-2"
               onPress={() => {
@@ -77,7 +84,11 @@ const Header = () => {
             </Pressable>
 
             <Pressable
-              className={`w-[40px] h-[40px] flex justify-center items-center ${lightTheme ? "bg-light-surface border-light-border" : "bg-dark-surface"} rounded-full`}
+              className={`w-[40px] h-[40px] flex justify-center items-center ${
+                lightTheme
+                  ? "bg-light-surface border-light-border"
+                  : "bg-dark-surface"
+              } rounded-full`}
               onPress={() => {
                 if (token && isAuthenticated) {
                   dispatch(logout());
@@ -85,7 +96,11 @@ const Header = () => {
                 }
               }}
             >
-              <FontAwesome name="user" size={20} color={lightTheme ? "gray" : "#fff"} />
+              <FontAwesome
+                name="user"
+                size={20}
+                color={lightTheme ? "gray" : "#fff"}
+              />
             </Pressable>
           </View>
         </View>
