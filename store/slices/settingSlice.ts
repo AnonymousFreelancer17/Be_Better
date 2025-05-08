@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   lightTheme: false,
+  notificationVibility : false,
 };
 
 interface SettingState {
@@ -15,9 +16,12 @@ const settingSlice = createSlice({
     themeToggler: (state) => {
       state.lightTheme = !state.lightTheme;
     },
+    NotificationModalVisibilityTogler: (state) =>{
+      state.notificationVibility = !state.notificationVibility;
+    }
     
   },
 });
 
-export const { themeToggler } = settingSlice.actions;
+export const { themeToggler,NotificationModalVisibilityTogler } = settingSlice.actions;
 export default settingSlice.reducer;

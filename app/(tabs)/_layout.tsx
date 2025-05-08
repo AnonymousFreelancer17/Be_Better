@@ -1,18 +1,40 @@
-import React from "react";
-import { View } from "react-native";
+import React, { useEffect } from "react";
 import { Redirect, Tabs } from "expo-router";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import Header from "../components/Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserInfo } from "@/store/slices/AuthSlice";
 import { RootState } from "@/store/store";
+import axios from "axios";
 
 const _layout = () => {
+  const { isAuthenticated, user, token } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector((state:RootState) => state.auth);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const res = await axios.post(
+          `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/getUserDetails`,
+          {token},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("User details:", res.data);
+        // dispatch(fetchUserInfo(res.data));
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [token, user, dispatch]);
+
   if (!isAuthenticated) {
-    return <Redirect href="/auth/Login" />;
+    return <Redirect href="/auth/login" />;
   }
-
 
   return (
     <Tabs
@@ -20,10 +42,10 @@ const _layout = () => {
         tabBarShowLabel: true,
         tabBarActiveTintColor: "orange",
         tabBarInactiveTintColor: "gray",
-        tabBarStyle:{
-            backgroundColor : "#000000",
-            borderColor : "#4a4a4a"
-        }
+        tabBarStyle: {
+          backgroundColor: "#000000",
+          borderColor: "#4a4a4a",
+        },
       }}
     >
       <Tabs.Screen

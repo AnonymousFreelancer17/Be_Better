@@ -12,7 +12,7 @@ const _layout = () => {
       }}
     >
       <Tabs.Screen name="register" />
-      <Tabs.Screen name="Login" />
+      <Tabs.Screen name="login" />
     </Tabs>
   );
 };

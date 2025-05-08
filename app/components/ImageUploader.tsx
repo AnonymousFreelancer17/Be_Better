@@ -76,7 +76,9 @@ const ImageUploader = () => {
       <View className="w-1/3 h-[17vh] flex justify-center items-center relative">
         <View className="w-[80px] h-[80px] rounded-[50%] bg-black flex justify-center items-center border border-gray-500 relative">
           {selectedImage ? (
-            <Image className="bg-white" source={{ uri: selectedImage }} />
+            <Image className="bg-white" source={{
+              uri : selectedImage
+            }} />
           ) : (
             <FontAwesome name="user" size={40} color={"#fff"} />
           )}
