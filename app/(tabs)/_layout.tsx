@@ -89,7 +89,7 @@ const _layout = () => {
       <Tabs.Screen
         name="nutrition"
         options={{
-          title: "Nutrition",
+          title: "Meals",
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <FontAwesome name="cutlery" size={20} color={color} />
