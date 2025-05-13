@@ -10,10 +10,10 @@ import {
   RefreshControl
 } from "react-native";
 import { RootState } from "../../store/store";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import SectionHeading from "../components/SectionHeading";
+import SectionHeading from "../../components/SectionHeading";
 
 export default function Index() {
   const router = useRouter();

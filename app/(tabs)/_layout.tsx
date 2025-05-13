@@ -51,7 +51,7 @@ const _layout = () => {
       screenOptions={{
         tabBarShowLabel: true,
         tabBarActiveTintColor: "orange",
-        tabBarInactiveTintColor: "gray",
+        tabBarInactiveTintColor: lightTheme ? "#D1D5DB" : "#475569",
         tabBarStyle: {
           backgroundColor: lightTheme ? "#FFFFFF" : "#0F172A" ,
           borderColor: "#4a4a4a",

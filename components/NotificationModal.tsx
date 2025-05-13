@@ -8,14 +8,6 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import closeDark from "../../assets/images/close-dark.png";
-import closeLight from "../../assets/images/close-light.png";
-
-type ModalProps = {
-  type: string; // Extend this if you have more types
-  closeBtn?: boolean;
-  heading: string;
-};
 
 const NotificationModal = ({}) => {
   const { lightTheme } = useSelector(
@@ -34,7 +26,7 @@ const NotificationModal = ({}) => {
             dispatch(NotificationModalVisibilityTogler());
           }}
         >
-           {lightTheme ? <Image source={require("../../assets/images/close_dark.png")}></Image> : <Image source={require("../../assets/images/close-light.png")}></Image>}
+           {lightTheme ? <Image source={require("../assets/images/close_dark.png")}></Image> : <Image source={require("../assets/images/close-light.png")}></Image>}
         </Pressable>
 
         <View className="w-full h-full relative flex flex-1 flex-col justify-start items-center">

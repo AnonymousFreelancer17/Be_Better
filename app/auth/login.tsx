@@ -7,7 +7,7 @@ import { login } from "@/store/slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { BlurView } from "expo-blur";
-import AuthModal from "../components/AuthModal";
+import AuthModal from "../../components/AuthModal";
 
 
 const Login = () => {  

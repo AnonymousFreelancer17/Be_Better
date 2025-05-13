@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
-import Header from "../components/Header";
+import Header from "../../components/Header";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const Fitness = () => {
   // const data = {
@@ -127,50 +129,205 @@ const Fitness = () => {
   //   },
   // };
 
+  const { lightTheme } = useSelector((state: RootState) => state.setting);
 
-  const data = [{
-    workoutType : "Gym || Home || Calesthenics || Flexiblity",
-    sections : [{title : "Warm-ups"},{title : "Chest"},{title : "Legs"},{title : "Abs"},{title : ""}]
-    
-  }]
+  const data = {
+    user: {
+      age: "",
+      height: "",
+      weight: "",
+      BMR: "BMR=10 * weight (kg)+6.25 * height(cm) - 5*age(years)+5",
+      prevActivityLevel: "",
+      currActivityLevel: "",
+      futureActivityLevel: "",
+      goal: {
+        targetWeight: "",
+        muscleGrowth: "",
+        shredding: "",
+      },
+      calorieDetails: {
+        dailyCaloriesRequired: 2500,
+        caloriesForMuscleGrowth: 2700,
+        caloriesForShredding: 2200,
+        macroBreakdown: {
+          protein: "2.2g per kg body weight",
+          carbs: "3g per kg body weight",
+          fats: "1g per kg body weight",
+        },
+      },
+      trainingRegime: [
+        {
+          workoutType: "Home",
+          sections: [
+            {
+              title: "Warm-ups",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "lowerBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "core",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "UpperBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          workoutType: "Gym",
+          sections: [
+            {
+              title: "Warm-ups",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "lowerBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "core",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "UpperBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          workoutType: "Calesthenics",
+          sections: [
+            {
+              title: "Warm-ups",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "lowerBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "core",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+            {
+              title: "UpperBody",
+              exercises: [
+                {
+                  name: "",
+                  reps: "",
+                  description: "",
+                  equipments: "",
+                  targetMuscleGroup: "",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  };
 
   return (
     <View className="w-screen h-screen flex-1 bg-primary flex justify-center items-center">
       <Header route={"Fitness"} />
-      <View className="w-full h-full flex-1 flex flex-col justify-start items-center">
-        <View className="h-[60px] w-screen flex justify-center items-center bg-red-400">
-          <Text className="font-medium text-lg text-white">
-            Specialized Training regime tailored for you!
-          </Text>
-        </View>
-
-        <ScrollView
-          className="w-full flex-1 bg-gray-400"
-        >
-          {data.workout_plan.daily_routine?.map((item, idx) => {
-            return (
-              <View key={idx} className="w-full bg-secondary p-2">
-                {item.exercises?.map((d, idx) => {
-                  return (
-                    <View
-                      key={idx}
-                      className="w-full h-[200px] text-center border border-white bg-green-400 p-2 mb-1"
-                    >
-                      <Text className="text-white">
-                        {/* {JSON.stringify(d)} */}
-                        {d.name}
-                      </Text>
-                      <Text className="text-white">
-                         {/* - {d.duration? d.duration : ""} */}
-                      </Text>
-
-                    </View>
-                  );
-                })}
-              </View>
-            );
-          })}
-        </ScrollView>
+      <View
+        className={`w-full h-full flex-1 flex flex-col justify-start items-center ${
+          lightTheme ? "bg-light-background" : "bg-dark-background"
+        } `}
+      >
+        <ScrollView className="w-full flex-1 "></ScrollView>
       </View>
     </View>
   );

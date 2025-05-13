@@ -13,7 +13,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { BlurView } from "expo-blur";
-import AuthModal from "../components/AuthModal";
+import AuthModal from "../../components/AuthModal";
 
 const Register = () => {
   const [showForm, setShowForm] = useState(false);

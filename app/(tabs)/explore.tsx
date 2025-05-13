@@ -1,9 +1,9 @@
 import React from "react";
 import { SafeAreaView, Text, View } from "react-native";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import ImageUploader from "../components/ImageUploader";
+import ImageUploader from "../../components/ImageUploader";
 
 const Explore = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
