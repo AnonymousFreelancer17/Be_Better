@@ -8,6 +8,8 @@ import axios from "axios";
 
 const _layout = () => {
   const { isAuthenticated, user, token } = useSelector((state: RootState) => state.auth);
+  const { lightTheme } = useSelector((state: RootState) => state.setting);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,7 +53,7 @@ const _layout = () => {
         tabBarActiveTintColor: "orange",
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
-          backgroundColor: "#000000",
+          backgroundColor: lightTheme ? "#FFFFFF" : "#0F172A" ,
           borderColor: "#4a4a4a",
         },
       }}
@@ -76,6 +78,7 @@ const _layout = () => {
           ),
         }}
       />
+
       <Tabs.Screen
         name="fitness"
         options={{
@@ -106,6 +109,20 @@ const _layout = () => {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          headerShown: false,
+          tabBarButton: ()=>null,
+          tabBarIcon: ({ color }) => (
+            <FontAwesome name="user" size={24} color={color} />
+          ),
+          
+        }}
+      />
+
       
     </Tabs>
   );

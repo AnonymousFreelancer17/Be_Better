@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Pressable,
   Image,
+  RefreshControl
 } from "react-native";
 import { RootState } from "../../store/store";
 import Header from "../components/Header";

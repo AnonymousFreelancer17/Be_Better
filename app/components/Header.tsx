@@ -10,7 +10,6 @@ import {
 } from "@/store/slices/settingSlice";
 import { Link, router } from "expo-router";
 import NotificationModal from "./NotificationModal";
-import { BlurView } from "expo-blur";
 import MenuButton from "./MenuButton";
 
 const Header = ({ route }: { route: any }) => {
@@ -34,16 +33,20 @@ const Header = ({ route }: { route: any }) => {
       >
         <View className="w-11/12 flex flex-row justify-start items-center">
           <View className="flex-1 flex flex-row justify-center items-center">
-            <Pressable
-              className="w-[40px] h-[40px] flex flex-col justify-center items-center"
-              onPress={() => {}}
+            <Link
+              href={"/(tabs)"}
+              className="w-[40px] h-[40px] flex justify-center items-center relative"
             >
-              {lightTheme ? (
-                <Image source={require("../../assets/images/Vector-1.png")} />
-              ) : (
-                <Image source={require("../../assets/images/Vector.png")} />
-              )}
-            </Pressable>
+              <View className="w-full h-full flex justify-center items-center relative ">
+                <Text
+                  className={`${
+                    lightTheme ? "text-black" : "text-white"
+                  } font-bold`}
+                >
+                  LOGO
+                </Text>
+              </View>
+            </Link>
             <View className="flex-1 justify-center items-center">
               <Text
                 className={`font-medium  ${
@@ -55,19 +58,6 @@ const Header = ({ route }: { route: any }) => {
             </View>
           </View>
           <View className="w-auto h-full flex flex-row justify-end items-center relative">
-            {/* <Pressable
-              className="w-[40px] h-[40px] flex justify-center items-center relative bg-red-400"
-              onPress={() => {
-                dispatch(themeToggler());
-              }}
-            >
-              {!lightTheme ? (
-                <FontAwesome name="sun-o" size={20} color={"#fff"} />
-              ) : (
-                <FontAwesome name="moon-o" size={20} color={"gray"} />
-              )}
-            </Pressable> */}
-
             <Pressable
               className="h-[50px] flex justify-center items-center relative me-2"
               onPress={() => {
@@ -90,12 +80,6 @@ const Header = ({ route }: { route: any }) => {
                   ? "bg-light-surface border-light-border"
                   : "bg-dark-surface"
               } rounded-full`}
-              // onPress={() => {
-              //   if (token && isAuthenticated) {
-              //     dispatch(logout());
-              //     router.replace("/auth/login");
-              //   }
-              // }}
               onPress={() => {
                 setShowMenuBar(!showMenuBar);
               }}
@@ -113,20 +97,23 @@ const Header = ({ route }: { route: any }) => {
       {showMenuBar && (
         <View
           className={`${
-            lightTheme ? "bg-light-surface" : "bg-dark-surface"
-          } w-3/4 flex justify-start items-center z-40`}
+            lightTheme ? "bg-light-background" : "bg-dark-background"
+          } w-3/4 flex justify-start items-center z-40 p-2`}
           style={{
             position: "absolute",
-            top: 60,
+            top: 63,
             right: 0,
             height: 550,
-            shadowColor: lightTheme ? "rgba(0,0,0)" : "rgba(1,1,1)",
-            shadowOpacity: 0.5,
+            shadowOpacity: 0.25,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowRadius: 3.84,
+            elevation: 5, // Only for Android
           }}
         >
           <View
             className={`w-full h-[140px] border-b flex flex-row justify-center items-center ${
-              lightTheme ? "border-light-card" : "border-dark-card"
+              lightTheme ? "border-light-border" : "border-dark-border"
             }`}
             style={{
               height: 110,
@@ -138,82 +125,167 @@ const Header = ({ route }: { route: any }) => {
               {/* {user?.profilePic === "" ? (
                 <Image source={require(user?.profilePic)} />
               ) : ( */}
-             <View className={`w-[60px] h-[60px] ${lightTheme ? "border border-light-card" : "border border-dark-card" } rounded-full flex justify-center items-center`}>
-               <FontAwesome
-                name="user"
-                size={32}
-                color={lightTheme ? "gray" : "white"}
-              />
-             </View>
+              <View
+                className={`w-[60px] h-[60px] ${
+                  lightTheme
+                    ? "border border-light-border bg-light-surface"
+                    : "border border-dark-border bg-dark-surface"
+                } rounded-full flex justify-center items-center`}
+              >
+                <FontAwesome
+                  name="user"
+                  size={32}
+                  color={lightTheme ? "gray" : "white"}
+                />
+              </View>
               {/* )} */}
             </View>
             <View className="w-[70%] h-full flex justify-center items-center">
-              <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
+              <Text
+                className={`${
+                  lightTheme ? "text-black" : "text-white"
+                } font-medium`}
+              >
                 {user?.name}
               </Text>
-              <Text
-                className={`w-10/12 text-center ${
-                  lightTheme ? "text-black" : "text-white"
-                }`}
-              >
+              <Text className={`w-full text-center text-gray-500`}>
                 {user?.email}
               </Text>
-              <Link href={`/profile`} className={`text-light-primary`}>
-                View Profile
+              <Link
+                href={`/profile`}
+                className={`flex justify-center items-center h-[25px]`}
+              >
+                <View className="h-full flex justify-center items-center mr-2">
+                  <Text className="text-light-primary font-semibold underline">
+                    View Profile
+                  </Text>
+                </View>
+                <View
+                  className="text-light-primary flex justify-center items-center"
+                  style={{
+                    height: "100%",
+                    paddingLeft: 4,
+                    marginTop: 4,
+                  }}
+                >
+                  <FontAwesome
+                    className="p-0 m-0"
+                    name="external-link"
+                    color={"#3B82F6"}
+                  />
+                </View>
               </Link>
             </View>
           </View>
 
           <View
-            className={`w-full h-[140px] border-b flex flex-row justify-center items-center ${
-              lightTheme ? "border-light-card" : "border-dark-card"
+            className={`w-full h-[140px] border-b flex flex-col justify-center items-center ${
+              lightTheme ? "border-light-border" : "border-dark-border"
             }`}
             style={{
               height: 110,
             }}
           >
-            <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Architecto, aliquam rem. Quos doloribus co 
-            </Text>
+            <MenuButton
+              title="Google"
+              icon="google"
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={null}
+            />
+
+            <MenuButton
+              title="Logout"
+              icon="sign-out"
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={() => {
+                if (token && isAuthenticated) {
+                  dispatch(logout());
+                  router.replace("/auth/login");
+                }
+              }}
+            />
           </View>
           <View
             className={`w-full h-[140px] flex flex-col justify-center items-center ${
-              lightTheme ? "border-light-card" : "border-dark-card"
+              lightTheme ? "border-light-border" : "border-dark-border"
             }`}
             style={{
               height: 110,
             }}
           >
-           <MenuButton title="Setting" icon="gear" iconColor={null} iconSize={24} iconRounded={false} />
+            <MenuButton
+              title="Language : English"
+              icon="language"
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={null}
+            />
 
-            <MenuButton title="Setting" icon="gear" iconColor={null} iconSize={24} iconRounded={false} />
+            <MenuButton
+              title="Theme : Dark (Default)"
+              icon={null}
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={() => {
+                dispatch(themeToggler());
+              }}
+            />
           </View>
           <View
             className={`w-full flex justify-center items-center border-t ${
-              lightTheme ? "border-t border-light-card" : "border-dark-card"
+              lightTheme ? "border-b border-light-border" : "border-dark-border"
             }`}
             style={{
               height: 110,
             }}
           >
-           <MenuButton title="Setting" icon="gear" iconColor={null} iconSize={24} iconRounded={false} />
+            <MenuButton
+              title="Setting"
+              icon="gear"
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={null}
+            />
 
-           <MenuButton title="Setting" icon="gear" iconColor={null} iconSize={24} iconRounded={false} />
-
+            <MenuButton
+              title="Setting"
+              icon="gear"
+              iconColor={null}
+              iconSize={24}
+              iconRounded={false}
+              action={null}
+            />
           </View>
           <View
-            className={`w-full flex justify-center items-center border-t ${
-              lightTheme ? "border-t border-light-card" : "border-t border-dark-card"
-            }`}
+            className={`w-full flex justify-center items-center`}
             style={{
               height: 110,
             }}
           >
-            <MenuButton title={"Help"} icon={"question"} iconColor={null} iconSize={16} iconRounded={true}  />
+            <MenuButton
+              title={"Help"}
+              icon={"question"}
+              iconColor={null}
+              iconSize={16}
+              iconRounded={true}
+              action={null}
+            />
 
-            <MenuButton title={"Send Feedback"} icon={"exclamation"} iconColor={null} iconSize={16} iconRounded={true}  />
-
+            <MenuButton
+              title={"Send Feedback"}
+              icon={"exclamation"}
+              iconColor={null}
+              iconSize={16}
+              iconRounded={true}
+              action={null}
+            />
           </View>
         </View>
       )}
