@@ -25,29 +25,30 @@ const Header = ({ route }: { route: any }) => {
   return (
     <>
       <View
-        className={`w-[100%] h-[60px] flex flex-row justify-center items-center z-40  ${
+        className={`w-[100%] h-[60px] flex flex-row justify-center items-center z-40 ${
           lightTheme
             ? "bg-light-background border-b border-light-border"
             : "bg-dark-background border-b border-dark-border"
         }`}
       >
-        <View className="w-11/12 flex flex-row justify-start items-center">
-          <View className="flex-1 flex flex-row justify-center items-center">
-            <Link
-              href={"/(tabs)"}
-              className="w-[40px] h-[40px] flex justify-center items-center relative"
-            >
-              <View className="w-full h-full flex justify-center items-center relative ">
+        <View className="w-11/12 h-full flex flex-row justify-between items-center">
+          <View className="h-full w-[70%] flex flex-row justify-center items-center">
+            <View className="flex justify-center items-center">
+              <Link
+                href={"/(tabs)"}
+                className="w-[40px] flex justify-center items-center relative"
+              >
                 <Text
-                  className={`${
+                  className={`h-full flex justify-center items-center ${
                     lightTheme ? "text-black" : "text-white"
                   } font-bold`}
                 >
                   LOGO
                 </Text>
-              </View>
-            </Link>
-            <View className="flex-1 justify-center items-center">
+              </Link>
+            </View>
+
+            <View className="h-full flex-1 justify-center items-center">
               <Text
                 className={`font-medium  ${
                   lightTheme ? "text-black" : "text-white"
@@ -57,7 +58,7 @@ const Header = ({ route }: { route: any }) => {
               </Text>
             </View>
           </View>
-          <View className="w-auto h-full flex flex-row justify-end items-center relative">
+          <View className="w-[30%] h-full flex flex-row justify-end items-center relative ">
             <Pressable
               className="h-[50px] flex justify-center items-center relative me-2"
               onPress={() => {
@@ -203,14 +204,16 @@ const Header = ({ route }: { route: any }) => {
               iconRounded={false}
               action={() => {
                 if (token && isAuthenticated) {
-                  dispatch(logout());
-                  router.replace("/auth/login");
+                  setTimeout(() => {
+                    dispatch(logout());
+                    router.replace("/auth/login");
+                  }, 3000);
                 }
               }}
             />
           </View>
           <View
-            className={`w-full h-[140px] flex flex-col justify-center items-center ${
+            className={`w-full h-[140px] flex flex-col justify-center items-center border-b ${
               lightTheme ? "border-light-border" : "border-dark-border"
             }`}
             style={{
@@ -218,7 +221,7 @@ const Header = ({ route }: { route: any }) => {
             }}
           >
             <MenuButton
-              title="Language : English"
+              title="Language"
               icon="language"
               iconColor={null}
               iconSize={24}
@@ -227,7 +230,7 @@ const Header = ({ route }: { route: any }) => {
             />
 
             <MenuButton
-              title="Theme : Dark (Default)"
+              title={lightTheme ? "Theme : Light" : "Theme : Dark (Default)"}
               icon={null}
               iconColor={null}
               iconSize={24}
@@ -238,8 +241,8 @@ const Header = ({ route }: { route: any }) => {
             />
           </View>
           <View
-            className={`w-full flex justify-center items-center border-t ${
-              lightTheme ? "border-b border-light-border" : "border-dark-border"
+            className={`w-full flex justify-center items-center border-b ${
+              lightTheme ? "border-light-border" : "border-dark-border"
             }`}
             style={{
               height: 110,

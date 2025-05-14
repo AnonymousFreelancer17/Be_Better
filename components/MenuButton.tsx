@@ -10,41 +10,58 @@ const MenuButton = ({
   iconSize,
   iconColor,
   iconRounded,
-  action
+  action,
 }: {
   icon: any;
   title: any;
   iconSize: number;
-  iconColor : any;
-  iconRounded : boolean;
-  action : any;
+  iconColor: any;
+  iconRounded: boolean;
+  action: any;
 }) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-    <Pressable className="w-full h-[30px] mb-4 flex flex-row justify-start items-center"
-      onPress={()=>{
-         action()
+    <Pressable
+      className="w-full h-[30px] mb-4 flex flex-row justify-start items-center"
+      onPress={() => {
+        action();
       }}
     >
       <View className="flex-1 h-full justify-center items-center ">
-        <View className={`h-[30px] w-[30px] flex justify-center items-center  ${iconRounded ? "border border-white rounded-full" : ""} me-2`}>
-          {icon && <FontAwesome
-            name={icon}
-            color={iconColor ? iconColor : lightTheme ? "gray" : "white"}
-            size={iconSize || 16}
-          />}
-          {
-            icon === null && 
-                <FontAwesome name={`${lightTheme ? "sun-o" : "moon-o"}`} size={20} color={lightTheme ? "gray" : "white" } />
-          }
-          
+        <View
+          className={`h-[30px] w-[30px] flex justify-center items-center  ${
+            iconRounded ? "border border-white rounded-full" : ""
+          } me-2`}
+        >
+          {icon && (
+            <FontAwesome
+              name={icon}
+              color={iconColor ? iconColor : lightTheme ? "gray" : "white"}
+              size={iconSize || 16}
+            />
+          )}
+          {icon === null && (
+            <FontAwesome
+              name={`${lightTheme ? "sun-o" : "moon-o"}`}
+              size={20}
+              color={lightTheme ? "gray" : "white"}
+            />
+          )}
         </View>
       </View>
       <View className="w-[80%] h-full flex justify-center items-start ">
-        <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
-          {title}
-        </Text>
+        {title !== "Language" ? (
+          <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
+            {title}
+          </Text>
+        ) : (
+          <><Text className={`${lightTheme ? "text-black" : "text-white"}`}>
+            {title}
+          </Text>
+           
+          </>
+        )}
       </View>
     </Pressable>
   );

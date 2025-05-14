@@ -51,10 +51,10 @@ const _layout = () => {
       screenOptions={{
         tabBarShowLabel: true,
         tabBarActiveTintColor: "orange",
-        tabBarInactiveTintColor: lightTheme ? "#D1D5DB" : "#475569",
+        tabBarInactiveTintColor: lightTheme ? "gray" : "#fff",
         tabBarStyle: {
           backgroundColor: lightTheme ? "#FFFFFF" : "#0F172A" ,
-          borderColor: "#4a4a4a",
+          borderColor: lightTheme ? "#D1D5DB" : "#475569",
         },
       }}
     >
@@ -108,22 +108,7 @@ const _layout = () => {
             <FontAwesome name="clock-o" size={24} color={color} />
           ),
         }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          headerShown: false,
-          tabBarButton: ()=>null,
-          tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={24} color={color} />
-          ),
-          
-        }}
-      />
-
-      
+      />    
     </Tabs>
   );
 };

@@ -7,13 +7,14 @@ import {
   ImageBackground,
   Pressable,
   Image,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import { RootState } from "../../store/store";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import SectionHeading from "../../components/SectionHeading";
+import ImageCard from "@/components/ImageCard";
 
 export default function Index() {
   const router = useRouter();
@@ -37,37 +38,13 @@ export default function Index() {
         <Header route={"Home"} />
         <View className="w-full flex-1 flex flex-col justify-center items-center mt-1">
           {showMotivation && (
-            <ImageBackground
-              className={`w-11/12 h-[150px] rounded-xl flex justify-center items-center relative mb-1 overflow-hidden ${
-                lightTheme ? "bg-light-surface" : "bg-dark-surface"
-              }`}
-              source={require("../../assets/images/sports1.jpg")}
-              resizeMode="cover"
-            >
-              <View className="bg-black/50 w-full flex-1 flex justify-center items-center">
-                <Text
-                  className={`w-10/12 text-center text-orange-200 relative`}
-                >
-                  Hi {user?.name}, Ready to crush your goals today?
-                </Text>
-                <Pressable
-                  className="absolute top-0 right-0 z-10 m-2 p-2"
-                  onPress={() => {
-                    setShowMotivation(!showMotivation);
-                  }}
-                >
-                  {!lightTheme ? (
-                    <Image
-                      source={require("../../assets/images/close-light.png")}
-                    />
-                  ) : (
-                    <Image
-                      source={require("../../assets/images/close_dark.png")}
-                    />
-                  )}
-                </Pressable>
-              </View>
-            </ImageBackground>
+            <ImageCard
+              text={`Hi ${user?.name}, Ready to crush your goals today?`}
+              imagePath={"../assets/images/sports1.jpg"}
+              action={() => {
+                setShowMotivation(!showMotivation);
+              }}
+            />
           )}
 
           <SectionHeading title={"Progress Board"} />
@@ -121,8 +98,6 @@ export default function Index() {
               })}
             </ScrollView>
           </View>
-
-
 
           <View className="w-full flex justify-center items-center ">
             <SectionHeading title={"Order Meals And Supplement"} />
