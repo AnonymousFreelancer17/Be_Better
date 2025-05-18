@@ -38,7 +38,6 @@ const Login = () => {
         dispatch(
           login({
             token: response?.data.token,
-            user: { email },
           })
         );
         setModalMessage("Login successful! Redirecting...");

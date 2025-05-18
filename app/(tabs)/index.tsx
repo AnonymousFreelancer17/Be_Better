@@ -36,7 +36,7 @@ export default function Index() {
         className="w-full flex-1"
       >
         <Header route={"Home"} />
-        <View className="w-full flex-1 flex flex-col justify-center items-center mt-1">
+        <View className="w-full flex-1 flex flex-col justify-center items-center mt-3">
           {showMotivation && (
             <ImageCard
               text={`Hi ${user?.name}, Ready to crush your goals today?`}
