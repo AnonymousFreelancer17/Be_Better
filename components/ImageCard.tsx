@@ -7,16 +7,25 @@ const ImageCard = ({
   text,
   action,
   imagePath,
+  cardHeight,
+  cardWidth,
+  cardMarginTop,
+  cardStyles,
 }: {
   action: any;
+  cardStyles: string;
   text: string;
   imagePath: string;
+  cardHeight: string;
+  cardWidth: string;
+  cardMarginTop: string;
 }) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-    <ImageBackground
-      className={`w-11/12 h-[150px] rounded-xl flex justify-center items-center relative mb-1 overflow-hidden ${
+   <View className="w-full flex justify-center items-center relative">
+     <ImageBackground
+      className={`rounded-xl flex justify-center items-center mb-1 overflow-hidden ${cardHeight} ${cardWidth} ${cardMarginTop} ${cardStyles} ${
         lightTheme ? "bg-light-surface" : "bg-dark-surface"
       }`}
       source={
@@ -43,6 +52,7 @@ const ImageCard = ({
         </Pressable>
       </View>
     </ImageBackground>
+   </View>
   );
 };
 

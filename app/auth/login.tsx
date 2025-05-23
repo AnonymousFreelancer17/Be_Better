@@ -1,29 +1,27 @@
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Image, Text, View, TextInput, Pressable, Alert, ActivityIndicator } from "react-native";
+import { Image, Text, View, TextInput, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { login } from "@/store/slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { BlurView } from "expo-blur";
-import AuthModal from "../../components/AuthModal";
+import AuthModal from "../../components/Modal";
 
-
-const Login = () => {  
-
+const Login = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
   const [showForm, setShowForm] = useState(false);
   const [email, onChangeEmail] = useState("");
   const [password, onChangePassword] = useState("");
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(false);
-  // modal logic
   const [modalMessage, setModalMessage] = useState("");
+  const [modalType, setmodalType] = useState("");
 
   const handleLogin = async () => {
     try {
       setLoading(true);
+      setmodalType("loading");
       setModalMessage("Logging in...");
 
       const response = await axios.post(
@@ -40,9 +38,11 @@ const Login = () => {
             token: response?.data.token,
           })
         );
+        setmodalType("success");
         setModalMessage("Login successful! Redirecting...");
         setTimeout(() => {
           setModalMessage("");
+          setmodalType("");
           router.replace("/(tabs)");
         }, 3000);
       }
@@ -51,14 +51,14 @@ const Login = () => {
       let message = "An unexpected error occurred!";
       if (axios.isAxiosError(error)) {
         message =
-          error.response?.data?.message ||
-          "Server Error. Please try again.";
+          error.response?.data?.message || "Server Error. Please try again.";
       }
+      setmodalType("error");
       setModalMessage(message);
-      // Auto-hide error modal after 2.5 seconds
       setTimeout(() => {
         setLoading(false);
         setModalMessage("");
+        setmodalType("");
       }, 2500);
 
       return error;
@@ -68,7 +68,7 @@ const Login = () => {
   const googleAuth = async () => {
     try {
       const response = await axios.get(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/google`
+        `${process.env.EXPO_PUBLIC_BACKEND_URL_LOCAL}/auth/google`
       );
       if (response) {
         console.log(response);
@@ -96,11 +96,10 @@ const Login = () => {
         lightTheme ? "bg-light-background" : "bg-dark-background"
       }`}
     >
-
       {/* modalLogic */}
-      {
-        isLoading && (<AuthModal modalMessage={modalMessage} />)
-      }
+      {isLoading && (
+        <AuthModal modalMessage={modalMessage} modalType={modalType} />
+      )}
 
       <View className="w-full flex-1 flex justify-center items-center">
         <View className="w-full flex flex-1 flex-col justify-center items-center">
@@ -152,7 +151,9 @@ const Login = () => {
             </View>
             <TextInput
               className={`w-10/12 border  rounded-md ${
-                lightTheme ? "text-black border-light-border" : "text-white border-dark-border"
+                lightTheme
+                  ? "text-black border-light-border"
+                  : "text-white border-dark-border"
               } py-4 mb-2 px-2`}
               onChangeText={onChangeEmail}
               value={email}
@@ -161,7 +162,9 @@ const Login = () => {
             />
             <TextInput
               className={`w-10/12 border rounded-md ${
-                lightTheme ? "text-black border-light-border" : "text-white border-dark-border"
+                lightTheme
+                  ? "text-black border-light-border"
+                  : "text-white border-dark-border"
               } py-4 px-2 mb-4`}
               onChangeText={onChangePassword}
               value={password}
@@ -193,10 +196,11 @@ const Login = () => {
           </View>
         )}
       </View>
+
       {!showForm && (
         <View className="h-[40%] w-full flex flex-col justify-center items-center ">
-          <Text className="text-red-400 w-10/12 text-center mb-4">
-            * Please begin with a simple registration
+          <Text className="text-green-400 w-10/12 text-center mb-4">
+            * Please login using following options
           </Text>
           <Text
             className={`bg-orange-400 ${
@@ -206,7 +210,7 @@ const Login = () => {
               setShowForm(!showForm);
             }}
           >
-            Sign in with e-mail
+            Sign in with e-mail/ Mobile number
           </Text>
           <Text
             className={`${
@@ -216,7 +220,9 @@ const Login = () => {
             Or
           </Text>
           <Pressable
-            className={`${lightTheme ? "bg-light-surface" : "bg-dark-surface"} w-10/12 flex flex-row justify-center items-center text-center py-3 rounded-md mb-2`}
+            className={`${
+              lightTheme ? "bg-light-surface" : "bg-dark-surface"
+            } w-10/12 flex flex-row justify-center items-center text-center py-3 rounded-md mb-2`}
             onPress={() => {
               googleAuth();
             }}
@@ -225,15 +231,23 @@ const Login = () => {
               source={require("../../assets/images/icons8-google-48.png")}
               className="w-[28px] h-[28px] me-3"
             ></Image>
-            <Text className={`${lightTheme ? "text-black" : "text-white"}`}>Continue with Google</Text>
+            <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
+              Continue with Google
+            </Text>
           </Pressable>
 
-          <View className={`${lightTheme ? "bg-light-surface" : "bg-dark-surface"} w-10/12 flex flex-row justify-center items-center text-center py-3 rounded-md`}>
+          <View
+            className={`${
+              lightTheme ? "bg-light-surface" : "bg-dark-surface"
+            } w-10/12 flex flex-row justify-center items-center text-center py-3 rounded-md`}
+          >
             <Image
               source={require("../../assets/images/icons8-facebook-48.png")}
               className="w-[29px] h-[29px] me-3"
             ></Image>
-            <Text className={`${lightTheme ? "text-black" : "text-white"}`}>Continue with Facebook</Text>
+            <Text className={`${lightTheme ? "text-black" : "text-white"}`}>
+              Continue with Facebook
+            </Text>
           </View>
         </View>
       )}

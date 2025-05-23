@@ -13,8 +13,9 @@ import { RootState } from "../../store/store";
 import Header from "../../components/Header";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import SectionHeading from "../../components/SectionHeading";
+import SectionHeading from "../../components/SectionHeader";
 import ImageCard from "@/components/ImageCard";
+import Section from "@/components/Section";
 
 export default function Index() {
   const router = useRouter();
@@ -23,101 +24,68 @@ export default function Index() {
   );
   const { lightTheme } = useSelector((state: RootState) => state.setting);
   const [showMotivation, setShowMotivation] = useState(true);
+  const [viewAllEvents, setViewAllEvents] = useState(false);
 
   return (
     <SafeAreaView
-      className={`flex-1 w-screen flex justify-start items-center ${
+      className={`h-auto w-screen flex justify-start items-center pb-[60px] ${
         lightTheme ? "bg-light-background" : "bg-dark-background"
       }`}
     >
+      <Header route={"Home"} />
       <ScrollView
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
         horizontal={false}
-        className="w-full flex-1"
+        className="w-full h-auto"
       >
-        <Header route={"Home"} />
-        <View className="w-full flex-1 flex flex-col justify-center items-center mt-3">
-          {showMotivation && (
-            <ImageCard
-              text={`Hi ${user?.name}, Ready to crush your goals today?`}
-              imagePath={"../assets/images/sports1.jpg"}
-              action={() => {
-                setShowMotivation(!showMotivation);
-              }}
-            />
-          )}
+        {showMotivation && (
+          <ImageCard
+            cardHeight="h-[150px]"
+            cardWidth="w-11/12"
+            cardMarginTop="mt-3"
+            cardStyles={""}
+            text={`Hi ${user?.name}, Ready to crush your goals today?`}
+            imagePath={"../assets/images/sports1.jpg"}
+            action={() => {
+              setShowMotivation(!showMotivation);
+            }}
+          />
+        )}
 
-          <SectionHeading title={"Progress Board"} />
+        <Section
+          sectionHeight={"flex-1"}
+          sectionWidth={"w-full"}
+          sectionHeading={"Progress Boards"}
+          sectionType={"progress-board"}
+          sectionHeaderVisibility={true}
+          sectionFooterVisibility={true}
+          sectionFooterButtonVisibility={true}
+          sectionFooterButtonText={"Create More"}
+          sectionFooterAction={() => {}}
+        />
 
-          <View className="w-11/12 h-[200px] flex flex-row justify-center items-center flex-wrap">
-            {[
-              [1, 2, 3],
-              [1, 2],
-              [1, 2],
-              [1, 2, 3],
-            ]?.map((d, index) => {
-              return (
-                <View
-                  key={index}
-                  className={`w-[45vw] h-[48%] ${
-                    lightTheme ? "bg-light-surface" : "bg-dark-surface"
-                  } ${
-                    index === 0 || index === 2 ? "mr-1 mb-1" : ""
-                  } flex justify-center items-center rounded-md`}
-                >
-                  <Text
-                    className={`${lightTheme ? "text-black" : "text-white"}`}
-                  >
-                    Box {index}
-                  </Text>
-                </View>
-              );
-            })}
-          </View>
-          <View className="w-11/12 flex justify-center items-end h-[40px]">
-            <Pressable className="text-orange-400" onPress={() => {}}>
-              <Text className="text-orange-400">Create More</Text>
-            </Pressable>
-          </View>
-
-          <View className="w-full flex justify-center items-center ">
-            <SectionHeading title={"Order Meals And Supplement"} />
-
-            <ScrollView horizontal={true} className="w-11/12 h-[200px] flex ">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]?.map((d, index) => {
-                return (
-                  <View
-                    key={index}
-                    className={`me-1 rounded-lg ${
-                      lightTheme ? "bg-light-surface" : "bg-dark-surface"
-                    }`}
-                  >
-                    <Text>Lorem ipsum dolor sit.</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
-
-          <View className="w-full flex justify-center items-center ">
-            <SectionHeading title={"Order Meals And Supplement"} />
-
-            <ScrollView horizontal={true} className="w-11/12 h-[200px] flex ">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]?.map((d, index) => {
-                return (
-                  <View
-                    key={index}
-                    className={`me-1 rounded-lg ${
-                      lightTheme ? "bg-light-surface" : "bg-dark-surface"
-                    }`}
-                  >
-                    <Text>Lorem ipsum dolor sit.</Text>
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
-        </View>
+        <Section
+          sectionHeight={"flex-1"}
+          sectionWidth={"w-full"}
+          sectionHeading={"Upcoming Events and Tasks"}
+          sectionType={"upcoming-schedules"}
+          sectionHeaderVisibility={true}
+          sectionFooterVisibility={true}
+          sectionFooterButtonVisibility={true}
+          sectionFooterButtonText={"View More"}
+          sectionFooterAction={`setViewAllEvents(!viewAllEvents)`}
+        />
+        <Section
+          sectionHeight={"flex-1"}
+          sectionWidth={"w-full"}
+          sectionHeading={"Products"}
+          sectionType={"order-products"}
+          sectionHeaderVisibility={true}
+          sectionFooterVisibility={true}
+          sectionFooterButtonVisibility={true}
+          sectionFooterButtonText={"View More"}
+          sectionFooterAction={``}
+        />
       </ScrollView>
     </SafeAreaView>
   );

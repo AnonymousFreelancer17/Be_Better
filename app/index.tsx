@@ -66,7 +66,7 @@ const index = () => {
         lightTheme ? "bg-light-background" : "bg-dark-background"
       } w-screen h-screen flex justify-center items-center`}
     >
-      <View className="w-11/12 h-full flex justify-between items-center">
+       {(!isAuthenticated && !token) ?  <View className="w-11/12 h-full flex justify-between items-center">
         <View className="w-full flex-1 flex flex-row justify-start items-center relative  overflow-hidden">
           <View className="w-full h-[150px] flex flex-row justify-center items-center z-30 absolute top-0 bg-transparent">
             <Text
@@ -169,10 +169,18 @@ const index = () => {
                               </View>
                             </View>
                             <View className="h-1/2 w-full flex justify-center items-center px-2 mt-1">
-                              <Text className="w-full text-sm font-bold">
+                              <Text
+                                className={`w-full text-sm font-bold ${
+                                  lightTheme
+                                    ? "text-dark-primaryText"
+                                    : "text-light-primaryText"
+                                }`}
+                              >
                                 Dia jones
                               </Text>
-                              <Text className="w-full text-sm font-normal">
+                              <Text
+                                className={`w-full text-sm font-normal ${lightTheme ? "text-dark-secondaryText": "text-light-secondaryText" }`}
+                              >
                                 Age : 26
                               </Text>
                             </View>
@@ -279,7 +287,12 @@ const index = () => {
             </Link>
           </View>
         </View>
-      </View>
+      </View> : 
+       <View className="w-full h-[150px] flex flex-row justify-center items-center">
+              <Text className={`text-2xl ${lightTheme ? "text-light-primaryText" : "text-dark-primaryText" } `}>Be Better</Text>
+              <Text className="text-2xl text-orange-400">.</Text>
+       </View>
+      }
     </SafeAreaView>
   );
 };

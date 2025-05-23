@@ -1,44 +1,62 @@
 import { RootState } from "@/store/store";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { BlurView } from "expo-blur";
 import React from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
-type ModalProps = {
-  type: string; // Extend this if you have more types
-  closeBtn?: boolean;
-  heading: string;
-};
-
-const Modal: React.FC<ModalProps> = ({ type, closeBtn, heading }) => {
+const Modal = ({
+  modalMessage,
+  modalType,
+}: {
+  modalMessage: any;
+  modalType: any;
+}) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-    <View
-      className={`z-50 absolute top-0 left-0 w-screen h-[100vh] flex justify-end items-end backdrop-blur-md bg-black/80`}
+    <BlurView
+      intensity={80}
+      tint={lightTheme ? `dark` : "light"}
+      className={`w-screen h-screen absolute top-0 left-0 flex z-40 bg-black/50 justify-center items-center`}
     >
       <View
         className={`${
-          type === "login" && "w-full h-[80vh] rounded-tr-3xl rounded-tl-3xl"
-        } ${lightTheme ? "bg-white" : "bg-primary"} overflow-hidden`}
+          lightTheme ? "bg-light-surface" : "bg-dark-surface"
+        } w-10/12 h-[300px] rounded-md flex justify-center items-center p-2
+        
+        ${modalType === "success" && "border-2 border-green-500"}
+        ${modalType === "loading" && "border-2 border-gray-500"}
+        ${modalType === "error" && "border-2 border-red-500"}
+        ${modalType === "" && ""}
+        `}
       >
-        <View className="text-center h-[60px] flex justify-center items-center bg-blue-200">
-          <Text className="font-medium text-xl text-white">{heading}</Text>
-        </View>
-        <ScrollView>{/*  loop thriough notification error */}</ScrollView>
+        {modalType === "loading" && (
+          <ActivityIndicator color={lightTheme ? "gray" : "#fff"} size={40} />
+        )}
+        {modalType === "success" && (
+          <FontAwesome name="check-circle" color={"green"} size={40} />
+        )}
+        {modalType === "error" && (
+          <FontAwesome name="close" color={"red"} size={40} />
+        )}
+
+        <Text
+          className={`
+            ${modalType === "success" && "text-green-400"} 
+            ${modalType === "error" && "text-red-400"} 
+            ${modalType === "loading" && "text-gray-400"} 
+           font-medium mt-8 `}
+        >
+          {modalMessage}
+        </Text>
+
+
+
+
+        {/*  close_button */}
       </View>
-
-      {type === "loading" && (
-        <View className="bg-white w-[300px] h-[300px] flex justify-center items-center ">
-          <ActivityIndicator color={"#000"} />
-        </View>
-      )}
-
-      {type === "success" && (
-        <View className="bg-white w-10/12 h-[50vh] flex justify-center items-center ">
-          <Text>Success!</Text>
-        </View>
-      )}
-    </View>
+    </BlurView>
   );
 };
 

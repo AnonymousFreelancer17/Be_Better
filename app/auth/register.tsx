@@ -13,7 +13,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { BlurView } from "expo-blur";
-import AuthModal from "../../components/AuthModal";
+import AuthModal from "../../components/Modal";
 
 const Register = () => {
   const [showForm, setShowForm] = useState(false);
@@ -23,17 +23,14 @@ const Register = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const dispatch = useDispatch();
+  const [modalType, setModalType] = useState("");
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   const handleRegistration = async () => {
     try {
       setisLoading(true);
+      setModalType("loading");
       setModalMessage("Logging in...");
-      console.log({
-        userName: userName,
-        email: email,
-        password: password,
-      });
 
       const response = await axios.post(
         `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/register`,
@@ -43,29 +40,28 @@ const Register = () => {
           password,
         }
       );
-      console.log("Response", response.data);
       if (response.data.status === "success") {
+        setModalType("success");
         setModalMessage(response.data.message);
         setTimeout(() => {
           setModalMessage("");
+          setModalType("");
           router.replace("/auth/login");
         }, 3000);
       }
 
       return response;
     } catch (error) {
-      console.log("Error : ", error);
-
       let message = "An unexpected error occurred!";
       if (axios.isAxiosError(error)) {
         message =
           error.response?.data?.message || "Server Error. Please try again.";
       }
-      console.log("Message", message);
-
+      setModalType("error");
       setModalMessage(message);
       setTimeout(() => {
         setisLoading(false);
+        setModalType("")
         setModalMessage("");
       }, 2500);
 
@@ -87,7 +83,7 @@ const Register = () => {
       }`}
     >
       {isLoading && (
-       <AuthModal modalMessage={modalMessage} />
+       <AuthModal modalType={modalType} modalMessage={modalMessage} />
       )}
 
       <View className="w-full flex-1 flex justify-center items-center">
