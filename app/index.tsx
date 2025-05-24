@@ -1,3 +1,4 @@
+import Slider from "@/components/Slider";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, router } from "expo-router";
@@ -78,7 +79,7 @@ const index = () => {
             </Text>
             <Text className="text-orange-400 text-4xl">.</Text>
           </View>
-
+{/* 
           <Animated.View
             style={{
               display: "flex",
@@ -209,7 +210,7 @@ const index = () => {
                   <View className="w-full flex justify-center items-center">
                     <View className="w-full flex justify-center items-center mr-10">
                       <Text
-                        className={` text-[28px] ${
+                        className={`text-[28px] ${
                           lightTheme
                             ? "text-light-primaryText"
                             : "text-dark-primaryText"
@@ -218,7 +219,7 @@ const index = () => {
                         {d.title.line1}
                       </Text>
                       <Text
-                        className={` text-[28px] ${
+                        className={`text-[28px] ${
                           lightTheme
                             ? "text-light-primaryText"
                             : "text-dark-primaryText"
@@ -242,7 +243,8 @@ const index = () => {
                 </View>
               );
             })}
-          </Animated.View>
+          </Animated.View> */}
+          <Slider dataType="intro" activeSlide={activeSlide}  />
         </View>
 
         <View className="w-full h-1/5 flex justify-center items-center">
