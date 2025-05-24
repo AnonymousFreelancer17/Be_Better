@@ -1,8 +1,5 @@
 // src/app/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./slices/AuthSlice";
-import exampleReducer from "./slices/exampleSlice";
-
 import {
   persistStore,
   persistReducer,
@@ -15,7 +12,19 @@ import {
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers } from "redux";
+
+
+// importing slices here -----------------------------------------------------------------
+
 import settingReducer from "./slices/settingSlice";
+import authReducer from "./slices/AuthSlice";
+import fitnessReducer from "./slices/fitnessSlice";
+import userReducer from "./slices/userSlice";
+import scheduleReducer from "./slices/scheduleSlice";
+import nutritionReducer from "./slices/nutritionSlice";
+import progressReducer from "./slices/progressSlice";
+
+
 
 const persistConfig = {
   key: "root",
@@ -25,7 +34,12 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  setting : settingReducer 
+  setting : settingReducer,
+  fitness : fitnessReducer,
+  user : userReducer,
+  schedule : scheduleReducer,
+  nutrition: nutritionReducer,
+  progress: progressReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

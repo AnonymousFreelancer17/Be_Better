@@ -12,17 +12,9 @@ const RoundedOrangeButton = ({
   pressableStyle: string;
   textStyle: string;
 }) => {
-
   return (
-    <Pressable
-      className={pressableStyle}
-      onPress={() => {
-        action
-      }}
-    >
-      <Text className={textStyle}>
-        {buttonText}
-      </Text>
+    <Pressable className={pressableStyle} onPress={action}>
+      <Text className={textStyle}>{buttonText}</Text>
     </Pressable>
   );
 };

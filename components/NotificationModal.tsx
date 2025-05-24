@@ -1,7 +1,7 @@
-import { NotificationModalVisibilityTogler } from "@/store/slices/settingSlice";
+import { toggleNotificationModalVisibility } from "@/store/slices/settingSlice";
 import { RootState } from "@/store/store";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "./Buttons/CloseButton";
 
@@ -11,18 +11,26 @@ const NotificationModal = ({}) => {
 
   return (
     <View
-      className={`z-50 absolute top-0 left-0 w-screen h-[100vh] flex justify-end items-end backdrop-blur-md bg-black/80`}
+      className={`w-screen h-[100vh] flex justify-center items-center`}
     >
+      <TouchableOpacity
+        className={`w-screen h-full flex justify-end items-end backdrop-blur-md bg-black/80 absolute top-0 z-30`}
+        onPress={() => {
+          dispatch(toggleNotificationModalVisibility());
+        }}
+      >
+        <View></View>
+      </TouchableOpacity>
       <View
         className={`${
           lightTheme ? "bg-light-surface" : "bg-dark-surface"
-        } w-full h-[80vh] flex flex-col justify-center items-center relative`}
+        } w-full h-[80vh] flex flex-col justify-center items-center relative z-50`}
       >
         <CloseButton
           pressableStyle={"top-0 right-0 absolute z-30 p-2"}
           imageStyle={""}
           action={() => {
-            dispatch(NotificationModalVisibilityTogler());
+            dispatch(toggleNotificationModalVisibility());
           }}
         />
 

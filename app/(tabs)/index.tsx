@@ -1,30 +1,26 @@
-import { useRouter } from "expo-router";
-import { useSelector } from "react-redux";
-import {
-  View,
-  Text,
-  ScrollView,
-  ImageBackground,
-  Pressable,
-  Image,
-  RefreshControl,
-} from "react-native";
-import { RootState } from "../../store/store";
-import Header from "../../components/Header";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import SectionHeading from "../../components/SectionHeader";
+
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+//  importing redux reducers and states
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
+
+// importing components here
+
+import Header from "@/components/Header";
 import ImageCard from "@/components/ImageCard";
 import Section from "@/components/Section";
 
 export default function Index() {
-  const router = useRouter();
-  const { isAuthenticated, token, user } = useSelector(
+  const {user } = useSelector(
     (state: RootState) => state.auth
   );
   const { lightTheme } = useSelector((state: RootState) => state.setting);
   const [showMotivation, setShowMotivation] = useState(true);
-  const [viewAllEvents, setViewAllEvents] = useState(false);
 
   return (
     <SafeAreaView
@@ -73,7 +69,7 @@ export default function Index() {
           sectionFooterVisibility={true}
           sectionFooterButtonVisibility={true}
           sectionFooterButtonText={"View More"}
-          sectionFooterAction={`setViewAllEvents(!viewAllEvents)`}
+          sectionFooterAction={`()=>{setViewAllEvents(!viewAllEvents)}`}
         />
         <Section
           sectionHeight={"flex-1"}

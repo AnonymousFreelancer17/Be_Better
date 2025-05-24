@@ -1,4 +1,4 @@
-import { createSlice ,PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserProfile {
   id: string;
@@ -8,10 +8,14 @@ interface UserProfile {
   gender: 'male' | 'female' | 'other';
   height: number; // in cm
   weight: number; // in kg
+  bodyFat: number;
   goal: 'weight_loss' | 'muscle_gain' | 'maintain';
   activityLevel: 'sedentary' | 'lightly_active' | 'active' | 'very_active';
   dietaryPreference: string;
   allergies: string[];
+  BMR: number;
+  hydration: number;
+  climate: string;
 }
 
 const initialState: UserProfile = {
@@ -22,24 +26,51 @@ const initialState: UserProfile = {
   gender: 'other',
   height: 0,
   weight: 0,
+  bodyFat: 0,
   goal: 'maintain',
   activityLevel: 'sedentary',
   dietaryPreference: 'balanced',
   allergies: [],
+  BMR: 0,
+  hydration: 0,
+  climate: '',
 };
 
 const userSlice = createSlice({
   name: 'userData',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{ user: any; token: string }>) => {
-      state.gender = action.payload.gender;
-      state.height = action.payload.height;
-      state.weight = true;
-      state.isLoading = false;
+    // Full login/profile set
+    setUserProfile: (state, action: PayloadAction<UserProfile>) => {
+      return { ...action.payload };
     },
+
+    // Partial profile update
+    updateUserProfile: (state, action: PayloadAction<Partial<UserProfile>>) => {
+      Object.assign(state, action.payload);
+    },
+
+    // Update BMR
+    setBMR: (state, action: PayloadAction<number>) => {
+      state.BMR = action.payload;
+    },
+
+    // Update hydration
+    setHydration: (state, action: PayloadAction<number>) => {
+      state.hydration = action.payload;
+    },
+
+    // Reset user to initial state
+    resetUserProfile: () => initialState,
   },
 });
 
-export const {  } = userSlice.actions;
+export const {
+  setUserProfile,
+  updateUserProfile,
+  setBMR,
+  setHydration,
+  resetUserProfile,
+} = userSlice.actions;
+
 export default userSlice.reducer;

@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  NotificationModalVisibilityTogler,
-  themeToggler,
+  toggleNotificationModalVisibility,
+  toggleTheme,
 } from "@/store/slices/settingSlice";
 import { Link, router } from "expo-router";
 
@@ -20,7 +20,7 @@ const Header = ({ route }: { route: any }) => {
   const { isAuthenticated, token, user } = useSelector(
     (state: RootState) => state.auth
   );
-  const { lightTheme, notificationVibility } = useSelector(
+  const { lightTheme, notificationVisibility } = useSelector(
     (state: RootState) => state.setting
   );
   const [showMenuBar, setShowMenuBar] = useState(false);
@@ -31,7 +31,7 @@ const Header = ({ route }: { route: any }) => {
   return (
     <>
       <View
-        className={`w-[100%] h-[60px] flex flex-row justify-center items-center z-40 ${
+        className={`w-[100%] h-[60px] flex flex-row justify-center items-center z-20 ${
           lightTheme
             ? "bg-light-background border-b border-light-border"
             : "bg-dark-background border-b border-dark-border"
@@ -68,7 +68,7 @@ const Header = ({ route }: { route: any }) => {
             <Pressable
               className="w-[40px] h-[40px] flex justify-center items-center relative me-2"
               onPress={() => {
-                dispatch(NotificationModalVisibilityTogler());
+                dispatch(toggleNotificationModalVisibility());
               }}
             >
               <View
@@ -106,7 +106,7 @@ const Header = ({ route }: { route: any }) => {
           </View>
         </View>
       </View>
-      {notificationVibility && <NotificationModal />}
+      {notificationVisibility && <NotificationModal />}
       {isLoading && <Modal modalMessage={modalMessage} modalType={modalType} />}
       {showMenuBar && (
         <View
@@ -270,7 +270,7 @@ const Header = ({ route }: { route: any }) => {
               iconSize={24}
               iconRounded={false}
               action={() => {
-                dispatch(themeToggler());
+                dispatch(toggleTheme());
               }}
             />
           </View>

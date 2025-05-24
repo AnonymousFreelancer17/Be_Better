@@ -27,12 +27,12 @@ const index = () => {
     {
       title: { line1: `Your Fitness`, line2: `Perfectly Planned!` },
       description:
-        "Create your fitness plan efficiently using our smart AI tools ,tweak the plan customize it to your needs!",
+        "Create . Customize . Continue",
       animation: "fitness",
     },
     {
       title: { line1: `Healthy Diet,`, line2: `We Got You Covered!` },
-      description: `Fitness and Nutrition always go hand in hand! Create Diet plans ,track macros ,track `,
+      description: `Fitness and Nutrition always go hand in hand! `,
       animation: "nutrition",
     },
     {
@@ -40,7 +40,7 @@ const index = () => {
         line1: `Suffering from laziness,`,
         line2: `Schedule & improve!`,
       },
-      description: `Fitness and Nutrition always go hand in hand! Create Diet plans ,track macros ,track`,
+      description: `Understand `,
       animation: "schedule",
     },
   ];
@@ -209,7 +209,7 @@ const index = () => {
                   <View className="w-full flex justify-center items-center">
                     <View className="w-full flex justify-center items-center mr-10">
                       <Text
-                        className={`text-[28px] ${
+                        className={` text-[28px] ${
                           lightTheme
                             ? "text-light-primaryText"
                             : "text-dark-primaryText"
@@ -218,7 +218,7 @@ const index = () => {
                         {d.title.line1}
                       </Text>
                       <Text
-                        className={`text-[28px] ${
+                        className={` text-[28px] ${
                           lightTheme
                             ? "text-light-primaryText"
                             : "text-dark-primaryText"
@@ -227,9 +227,9 @@ const index = () => {
                         {d.title.line2}
                       </Text>
                     </View>
-                    <View className="w-full flex justify-center items-center">
+                    <View className="w-full flex justify-center items-center  mr-10">
                       <Text
-                        className={`w-full ${
+                        className={` w-full text-center ${
                           lightTheme
                             ? "text-light-secondaryText"
                             : "text-dark-secondaryText"
