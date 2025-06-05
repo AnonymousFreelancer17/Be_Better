@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as DocumentPicker from "expo-document-picker";
-import AuthModal from "./Modal";
+import AuthModal from "../Modals/Modal";
 
 const ImageUploader = () => {
   const { token, user } = useSelector((state: RootState) => state.auth);

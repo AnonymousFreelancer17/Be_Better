@@ -6,7 +6,7 @@ import axios from "axios";
 import { login } from "@/store/slices/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import AuthModal from "../../components/Modal";
+import AuthModal from "../../components/Modals/Modal";
 
 const Login = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);

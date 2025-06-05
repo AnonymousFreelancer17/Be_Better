@@ -1,4 +1,4 @@
-import Slider from "@/components/Slider";
+import Slider from "@/components/Slider/Slider";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, router } from "expo-router";

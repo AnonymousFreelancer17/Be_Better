@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert, Text, View } from "react-native";
-import RoundedOrangeButton from "./Buttons/RoundedOrangeButton";
+import RoundedOrangeButton from "../Buttons/RoundedOrangeButton";
 
 const SectionButtonGroup = ({
   action,

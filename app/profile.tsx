@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, Text, View } from 'react-native'
 import Header from '../components/Header'
-import ImageUploader from '../components/ImageUploader'
+import ImageUploader from '../components/ImageUploader/ImageUploader'
 
 const profile = () => {
   return (

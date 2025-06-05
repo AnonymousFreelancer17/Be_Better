@@ -13,7 +13,8 @@ import { RootState } from "../../store/store";
 
 import Header from "@/components/Header";
 import ImageCard from "@/components/ImageCard";
-import Section from "@/components/Section";
+import Section from "@/components/Section/Section";
+import ImageCardSlider from "@/components/ImageCardSlider/ImageCardSlider";
 
 export default function Index() {
   const {user } = useSelector(
@@ -35,17 +36,7 @@ export default function Index() {
         className="w-full h-auto"
       >
         {showMotivation && (
-          <ImageCard
-            cardHeight="h-[150px]"
-            cardWidth="w-11/12"
-            cardMarginTop="mt-3"
-            cardStyles={""}
-            text={`Hi ${user?.name}, Ready to crush your goals today?`}
-            imagePath={"../assets/images/sports1.jpg"}
-            action={() => {
-              setShowMotivation(!showMotivation);
-            }}
-          />
+           <ImageCardSlider />
         )}
 
         <Section
