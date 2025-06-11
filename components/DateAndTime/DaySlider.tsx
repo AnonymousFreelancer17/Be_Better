@@ -14,8 +14,9 @@ import {
   getMonthNames,
   getAllDaysOfMonth,
   getWeekdayName,
-  getFormattedTime,
+  getFormattedTime
 } from "../../utils/Calendar";
+import Time from "./Time";
 
 const DaySlider = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
@@ -71,13 +72,14 @@ const DaySlider = () => {
           Today: {currentDayName}, {currentMonthName} {currentDate}
         </Text>
 
-        <Text
-          className={`font-bold text-sm pt-4 ${
+        {/* <Text
+          className={` pt-4 ${
             lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
           }`}
         >
           {currentTime}
-        </Text>
+        </Text> */}
+        <Time lightTheme={lightTheme} fontStyle="pt-4 font-bold text-sm" />
       </View>
 
       <ScrollView

@@ -6,7 +6,7 @@ import { Calendar } from "react-native-calendars";
 import Header from "../../components/Header";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import DaySlider from "@/components/Calendar/DaySlider";
+import DaySlider from "@/components/DateAndTime/DaySlider";
 
 const Schedule = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
