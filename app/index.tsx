@@ -1,4 +1,5 @@
 import Slider from "@/components/Slider/Slider";
+import WelcomeScreenAuthTrue from "@/components/Welcome/WelcomeScreenAuthTrue";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, router } from "expo-router";
@@ -142,10 +143,7 @@ const index = () => {
           </View>
         </View>
       </View> : 
-       <View className="w-full h-[150px] flex flex-row justify-center items-center">
-              <Text className={`text-2xl ${lightTheme ? "text-light-primaryText" : "text-dark-primaryText" } `}>Be Better</Text>
-              <Text className="text-2xl text-orange-400">.</Text>
-       </View>
+       <WelcomeScreenAuthTrue lightTheme={lightTheme} />
       }
     </SafeAreaView>
   );

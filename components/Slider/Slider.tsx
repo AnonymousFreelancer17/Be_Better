@@ -70,7 +70,7 @@ const Slider = ({
               line1={d.title.line1}
               line2={d.title.line2}
               description={d.description}
-              animation={"fitness"}
+              animation={d.animation}
             />
           );
         })}
