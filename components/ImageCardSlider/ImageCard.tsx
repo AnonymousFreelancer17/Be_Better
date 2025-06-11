@@ -11,6 +11,8 @@ const ImageCard = ({
   cardWidth,
   cardMarginTop,
   cardStyles,
+  cardMarginX,
+  cancelButtonVisibility
 }: {
   action: any;
   cardStyles: string;
@@ -19,18 +21,19 @@ const ImageCard = ({
   cardHeight: string;
   cardWidth: string;
   cardMarginTop: string;
+  cardMarginX: string;
+  cancelButtonVisibility: boolean;
 }) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-   <View className="w-full flex justify-center items-center relative">
      <ImageBackground
-      className={`rounded-xl flex justify-center items-center mb-1 overflow-hidden ${cardHeight} ${cardWidth} ${cardMarginTop} ${cardStyles} ${
-        lightTheme ? "bg-light-surface" : "bg-dark-surface"
+      className={`rounded-xl flex justify-center items-center mb-1 overflow-hidden ${cardHeight} ${cardWidth} ${cardMarginX} ${cardMarginTop} ${cardStyles} ${
+        lightTheme ? "bg-light-card" : "bg-dark-card"
       }`}
       source={
-        imagePath === "../assets/images/sports1.jpg" &&
-        require("../assets/images/sports1.jpg")
+        imagePath === "../../assets/images/sports1.jpg" &&
+        require("../../assets/images/sports1.jpg")
       }
       resizeMode="cover"
     >
@@ -38,21 +41,21 @@ const ImageCard = ({
         <Text className={`w-10/12 text-center text-orange-200 relative`}>
           {text}
         </Text>
-        <Pressable
+        {cancelButtonVisibility && <Pressable
           className="absolute top-0 right-0 z-10 m-2 p-2"
           onPress={() => {
             action();
           }}
         >
           {!lightTheme ? (
-            <Image source={require("../assets/images/close-light.png")} />
+            <Image source={require("../../assets/images/close-light.png")} />
           ) : (
-            <Image source={require("../assets/images/close_dark.png")} />
+            <Image source={require("../../assets/images/close_dark.png")} />
           )}
-        </Pressable>
+        </Pressable>}
       </View>
     </ImageBackground>
-   </View>
+    
   );
 };
 

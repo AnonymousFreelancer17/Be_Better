@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { Picker } from "@react-native-picker/picker";
-import languageList from "../utils/language.json";
-import countryList from "../utils/country.json";
+import languageList from "../../utils/language.json";
+import countryList from "../../utils/country.json";
 
 const MenuButton = ({
   icon,

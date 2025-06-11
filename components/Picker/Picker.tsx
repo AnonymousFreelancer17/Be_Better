@@ -8,12 +8,10 @@ import PickerModal from "../Modals/PickerModal";
 const Picker = ({
   height,
   width,
-  onChange,
   data,
 }: {
   height: string;
   width: string;
-  onChange: (val: string) => void;
   data: string[]; // assuming array of strings
 }) => {
   const [pickerModalVisibility, setPickerModalVisibility] = useState(false);
@@ -23,7 +21,9 @@ const Picker = ({
   return (
     <>
       <Pressable
-        onPress={() => setPickerModalVisibility(true)}
+        onPress={() => {
+          setPickerModalVisibility(true);
+        }}
         className={`px-4 me-2 ${height} flex flex-row justify-between items-center rounded-full border ${
           lightTheme ? "border-light-border" : "border-dark-border"
         }`}
@@ -47,11 +47,10 @@ const Picker = ({
         <PickerModal
           data={data}
           onSelect={(val: string) => {
-            onChange(val); // update parent
             setPickerModalVisibility(false);
           }}
-          width={`w-11/12`}
-          height={`h-[90vh]`}
+          width={`w-full`}
+          height={`h-[300px]`}
         />
       )}
     </>

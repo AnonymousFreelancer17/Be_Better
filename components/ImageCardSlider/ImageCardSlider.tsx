@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Dimensions, Pressable, View } from "react-native";
-import ImageCard from "../ImageCard";
+import { Animated, Dimensions, PanResponder, Pressable, View } from "react-native";
+import ImageCard from "./ImageCard";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -20,24 +20,41 @@ const ImageCardSlider = () => {
     }).start();
   }, [active]);
 
+   const panResponder = useRef(
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dx) > 10,
+        onPanResponderRelease: (_, gestureState) => {
+          if (gestureState.dx > 50) {
+            setActive((prev) => (prev > 0 ? prev - 1 : 0));
+          } else if (gestureState.dx < -50) {
+            setActive((prev) => (prev < [1,2,3].length - 1 ? prev + 1 : [1,2,3].length - 1));
+          }
+        },
+      })
+    ).current;
+
   return (
     <View className="w-auto h-auto relative mt-3">
-      <Animated.View className="w-auto relative flex flex-row justify-start items-start"
-      style={{
-        width: screenWidth * 3,
-        transform: [{ translateX: slideAnim }],
-      }}
+      <Animated.View
+        className="relative flex flex-row justify-start items-start"
+        style={{
+          width: screenWidth * 3,
+          transform: [{ translateX: slideAnim }],
+        }}
+        {...panResponder.panHandlers}
       >
         {[1, 2, 3].map((d, index) => {
           return (
             <ImageCard
               key={index}
-              cardHeight="h-[180px] bg-green-400"
+              cardHeight="h-[180px]"
               cardWidth="w-[90vw]"
               cardMarginTop="0"
               cardStyles={""}
+              cardMarginX={`mx-[18px]`}
+              cancelButtonVisibility={false}
               text={`Hi ${user?.name}, Ready to crush your goals today?`}
-              imagePath={"../assets/images/sports1.jpg"}
+              imagePath={"../../assets/images/sports1.jpg"}
               action={() => {
                 setShowMotivation(!showMotivation);
               }}

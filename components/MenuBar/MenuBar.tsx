@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MenuButton from "../MenuButton";
+import MenuButton from "./MenuButton";
 import { Text, View } from "react-native";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";

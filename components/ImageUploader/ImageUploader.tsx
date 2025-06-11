@@ -6,10 +6,12 @@ import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as DocumentPicker from "expo-document-picker";
 import AuthModal from "../Modals/Modal";
+import Modal from "../Modals/Modal";
 
 const ImageUploader = () => {
   const { token, user } = useSelector((state: RootState) => state.auth);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [modalType, setModalType] = useState("");
   const [imageData, setImageData] =
     useState<DocumentPicker.DocumentPickerAsset | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +20,7 @@ const ImageUploader = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   const pickImage = async () => {
+    setIsLoading(true);
     const result = await DocumentPicker.getDocumentAsync({
       type: "image/*",
       copyToCacheDirectory: true,
@@ -27,14 +30,28 @@ const ImageUploader = () => {
       const file = result.assets[0];
       setImageData(file);
       setSelectedImage(file.uri);
+
+      // modal logic
+      setModalType("success");
+      setModalMessage("Image was successfully selected !");
+      setIsLoading(false);
+
     } else {
-      Alert.alert("No image selected");
+      setModalType("error");
+      setModalMessage("Failed at successfully selecting an image !");
+      setIsLoading(false);
+
     }
   };
 
   const uploadImage = async () => {
+    setIsLoading(false);
+    
     if (!imageData || !imageData.uri) {
-      return Alert.alert("No image selected");
+      setIsLoading(true);
+      setModalMessage("No image selected");
+      setModalType("error");
+      return false;
     }
     setIsLoading(true);
     setModalMessage("Uploading...");
@@ -64,20 +81,27 @@ const ImageUploader = () => {
       );
       if (res.data) {
         console.log("Upload success:", res.data);
+        setModalType("success");
         setModalMessage("Uploaded Successfully!");
+        setIsLoading(false);
+
       }
     } catch (err) {
       if (err) {
         console.log('Error : ',err);
+        setModalType("error");
         setModalMessage("Upload Failed!");
+        setIsLoading(false);
+
       }
-    } finally {
+    }finally{
       setIsLoading(false);
-    }
+    }  
   };
 
   return (
-    <View className="w-11/12 flex flex-row justify-between items-center">
+    <>
+      <View className="w-11/12 flex flex-row justify-between items-center">
       {isLoading && <AuthModal modalType={"loading"} modalMessage={modalMessage} />}
 
       <View className="w-1/3 h-[17vh] flex justify-center items-center relative">
@@ -119,6 +143,9 @@ const ImageUploader = () => {
         <Text className="text-white">{user?.id}</Text>
       </View>
     </View>
+
+    {isLoading && <Modal modalType={modalType} modalMessage={modalMessage}  />}
+    </>
   );
 };
 

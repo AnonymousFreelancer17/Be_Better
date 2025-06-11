@@ -24,7 +24,7 @@ export default function PickerModal({
     <BlurView
       intensity={80}
        tint={lightTheme ? `light` : "dark"}
-      className={`min-w-[100vw] min-height-[100vh] absolute top-0 left-0 flex z-[1000] justify-start items-center`}
+      className={`w-screen h-screen absolute top-0 left-0 flex z-[1000] justify-start items-center`}
     >
       <ScrollView
         className={`w-[90vw] h-[40vh] rounded-md flex p-2

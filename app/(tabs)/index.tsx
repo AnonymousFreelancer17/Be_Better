@@ -12,9 +12,10 @@ import { RootState } from "../../store/store";
 // importing components here
 
 import Header from "@/components/Header";
-import ImageCard from "@/components/ImageCard";
+import ImageCard from "@/components/ImageCardSlider/ImageCard";
 import Section from "@/components/Section/Section";
 import ImageCardSlider from "@/components/ImageCardSlider/ImageCardSlider";
+import { router } from "expo-router";
 
 export default function Index() {
   const {user } = useSelector(
@@ -62,6 +63,18 @@ export default function Index() {
           sectionFooterButtonText={"View More"}
           sectionFooterAction={`()=>{setViewAllEvents(!viewAllEvents)}`}
         />
+        <Section
+          sectionHeight={"flex-1"}
+          sectionWidth={"w-full"}
+          sectionHeading={"Community Challanges"}
+          sectionType={"community-challanges"}
+          sectionHeaderVisibility={true}
+          sectionFooterVisibility={true}
+          sectionFooterButtonVisibility={true}
+          sectionFooterButtonText={"View More"}
+          sectionFooterAction={()=>{router.navigate("/communities")}}
+        />
+
         <Section
           sectionHeight={"flex-1"}
           sectionWidth={"w-full"}

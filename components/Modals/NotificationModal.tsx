@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "../Buttons/CloseButton";
 // import { Picker } from "@react-native-picker/picker";
 import Picker from "../Picker/Picker";
+import MessageCard from "@/app/NotificationModal/MessageCard";
 
 const NotificationModal = ({}) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
@@ -73,17 +74,14 @@ const NotificationModal = ({}) => {
                     key={index}
                     height="h-[30px]"
                     width="w-auto"
-                    data={d} 
-                    onChange={function (val: string): void {
-                      throw new Error("Function not implemented.");
-                    } }            
+                    data={d}             
                   />
                 );
               })}
             </ScrollView>
 
             {[1, 2, 3, 4, 5, 6].map((d, index) => {
-              return <TouchableOpacity key={index} className="w-full h-[40px] border flex justify-center items-center">{d}</TouchableOpacity>;
+              return <MessageCard key={index} index={index} lightTheme={lightTheme} />;
             })}
           </ScrollView>
         </View>

@@ -6,6 +6,10 @@ import SectionFooter from "./SectionFooter";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import ProgressCard from "./Cards/ProgressCard";
+import ScheduleCard from "./Cards/ScheduleCard";
+import ProductCard from "./Cards/ProductCard";
+import CommunityChallangesCard from "./Cards/CommunityChallangesCard";
 
 const Section = ({
   sectionHeight,
@@ -138,20 +142,11 @@ const Section = ({
               [1, 2, 3],
             ]?.map((d, index) => {
               return (
-                <View
+                <ProgressCard
                   key={index}
-                  className={`w-[45vw] h-[48%] ${
-                    lightTheme ? "bg-light-surface" : "bg-dark-surface"
-                  } ${
-                    index === 0 || index === 2 ? "mr-1 mb-1" : ""
-                  } flex justify-center items-center rounded-md`}
-                >
-                  <Text
-                    className={`${lightTheme ? "text-black" : "text-white"}`}
-                  >
-                    Box {index}
-                  </Text>
-                </View>
+                  lightTheme={lightTheme}
+                  index={index}
+                />
               );
             })}
           </View>
@@ -163,144 +158,25 @@ const Section = ({
               ?.slice(0, viewAllEvents ? upcomingTasksData.length : 4)
               .map((d, index) => {
                 return (
-                  <View
+                  <ScheduleCard
                     key={index}
-                    className={`w-full ${
-                      taskExpanded && d.id === taskExpandedId
-                        ? "h-[120px]"
-                        : "h-[60px]"
-                    } flex flex-row justify-start items-center
-                        ${
-                          index ===
-                          (viewAllEvents ? upcomingTasksData.length - 1 : 3)
-                            ? "border-0 rounded-br-lg rounded-bl-lg"
-                            : "border-b"
-                        } 
-                        ${index === 0 ? "rounded-tr-lg rounded-tl-lg" : ""} 
-                         
-                        ${
-                          lightTheme
-                            ? "bg-light-surface border-light-border"
-                            : "bg-dark-surface border-dark-border"
-                        }`}
-                  >
-                    <View
-                      className={`w-[20%] h-full flex flex-col justify-center items-center border-r ${
-                        lightTheme
-                          ? " border-light-border"
-                          : " border-dark-border"
-                      }`}
-                    >
-                      <View className="flex flex-row justify-center items-center">
-                        {d.eventType === "fitness" && (
-                          <FontAwesome
-                            name="heartbeat"
-                            color={"#fb923c"}
-                            className=" px-2 me-2"
-                            size={16}
-                          />
-                        )}
-                        {d.eventType === "meals" && (
-                          <FontAwesome
-                            name="cutlery"
-                            color={"#fb923c"}
-                            className=" px-2 me-2"
-                            size={16}
-                          />
-                        )}
-                        {d.eventType === "schedule" && (
-                          <FontAwesome
-                            name="clock-o"
-                            color={"#fb923c"}
-                            className=" px-2 me-2"
-                            size={16}
-                          />
-                        )}
-                        <Text
-                          className={`${
-                            lightTheme
-                              ? "text-light-primaryText"
-                              : "text-dark-primaryText"
-                          }`}
-                        >
-                          {d.time.slice(5, 7)}
-                        </Text>
-                      </View>
-                      <View className="w-full flex justify-center items-end px-2 ">
-                        <Text
-                          className={`font-semibold text-xs ${
-                            lightTheme
-                              ? "text-light-primaryText border-light-border"
-                              : "text-dark-primaryText border-dark-border"
-                          }`}
-                        >
-                          Feb
-                        </Text>
-                      </View>
-                    </View>
-                    <View className="flex-1 h-full flex flex-row justify-center items-center">
-                      <Pressable
-                        onPress={() => {
-                          setTaskExpanded(!taskExpanded);
-                          setTaskExpandedId(d.id);
-                        }}
-                        className="flex-1 flex flex-col justify-start items-center px-1"
-                      >
-                        <Text
-                          className={`w-full font-medium ${
-                            lightTheme
-                              ? "text-light-primaryText"
-                              : "text-dark-primaryText"
-                          }`}
-                        >
-                          {d.title}
-                        </Text>
-                        {taskExpanded && taskExpandedId === d.id && (
-                          <Text
-                            className={`font-light text-xs ${
-                              lightTheme
-                                ? "text-light-primaryText"
-                                : "text-dark-primaryText"
-                            }`}
-                          >
-                            {d.description}
-                          </Text>
-                        )}
-                      </Pressable>
-
-                      <View className="w-[40%] h-full flex flex-row justify-evenly items-center">
-                        <Pressable onPress={() => {}}>
-                          {d.completionStatus ? (
-                            <FontAwesome
-                              name="check"
-                              color={"#4ade80"}
-                              size={14}
-                            />
-                          ) : (
-                            <FontAwesome
-                              name="times"
-                              color={"#ef4444"}
-                              size={14}
-                            />
-                          )}
-                        </Pressable>
-                        <Pressable onPress={() => {}}>
-                          <FontAwesome
-                            name="times"
-                            color={"#ef4444"}
-                            size={14}
-                          />
-                        </Pressable>
-                        <Pressable onPress={() => {}}>
-                          <FontAwesome
-                            name="ellipsis-v"
-                            color={lightTheme ? "#1F2937" : "#F3F4F6"}
-                            size={14}
-                          />
-                        </Pressable>
-                      </View>
-                    </View>
-                  </View>
+                    index={index}
+                    id={d.id}
+                    title={d.title}
+                    description={d.description}
+                    lightTheme={lightTheme}
+                    taskExpanded={taskExpanded}
+                    taskExpandedId={taskExpandedId}
+                    viewAllEvents={viewAllEvents}
+                    data={upcomingTasksData}
+                    eventType={d.eventType}
+                    time={d.time}
+                    action={() => {
+                      setTaskExpandedId(d.id);
+                      setTaskExpanded(!taskExpanded);
+                    }}
+                    status={d.completionStatus}
+                  />
                 );
               })}
           </View>
@@ -310,25 +186,20 @@ const Section = ({
           <ScrollView className={` w-11/12 m-0 p-0`} horizontal={true}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((d, index) => {
               return (
-                <View
+                <ProductCard
                   key={index}
-                  className={`w-[150px] h-[250px] flex flex-col justify-center items-center ${
-                    lightTheme ? "bg-light-surface" : "bg-dark-surface"
-                  } me-1 rounded-lg`}
-                >
-                  <View>
-                    <Text
-                      className={`${
-                        lightTheme
-                          ? "text-light-primaryText"
-                          : "text-dark-primaryText"
-                      }`}
-                    >
-                      {index}
-                    </Text>
-                  </View>
-                </View>
+                  index={index}
+                  lightTheme={lightTheme}
+                />
               );
+            })}
+          </ScrollView>
+        )}
+
+        {sectionType === "community-challanges" && (
+          <ScrollView horizontal={true} className="flex-1 ms-4 flex">
+            {[1,2,3,4,5,6,7,8,9].map((d,index)=>{
+              return <CommunityChallangesCard key={index} index={index} lightTheme={lightTheme} />
             })}
           </ScrollView>
         )}
