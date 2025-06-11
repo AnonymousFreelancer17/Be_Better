@@ -37,7 +37,7 @@ const ScheduleCard = ({
       key={index}
       className={`w-full ${
         taskExpanded && id === taskExpandedId ? "h-[120px]" : "h-[60px]"
-      } flex flex-row justify-start items-center
+      } flex flex-row justify-start items-center bg-red-400
                         ${
                           index === (viewAllEvents ? data.length - 1 : 3)
                             ? "border-0 rounded-br-lg rounded-bl-lg"
@@ -52,7 +52,7 @@ const ScheduleCard = ({
                         }`}
     >
       <View
-        className={`w-[20%] h-full flex flex-col justify-center items-center border-r ${
+        className={`w-[20%] h-full flex flex-col ${taskExpanded ? "justify-center" :"justify-center"} items-center border-r ${
           lightTheme ? " border-light-border" : " border-dark-border"
         }`}
       >

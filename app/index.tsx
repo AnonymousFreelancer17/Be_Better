@@ -83,13 +83,13 @@ const index = () => {
       } w-screen h-screen flex justify-center items-center`}
     >
        {(!isAuthenticated && !token) ?  <View className="w-11/12 h-full flex justify-between items-center">
-        <View className="w-full flex-1 flex flex-row justify-start items-center relative  overflow-hidden"
+        <Animated.View className="w-full flex-1 flex flex-row justify-start items-center relative  overflow-hidden"
           {...panResponder.panHandlers}
         >
           <View className="w-full h-[150px] flex flex-row justify-center items-center z-30 absolute top-0 bg-transparent">
             <Text
               className={`${
-                lightTheme ? "text-black" : "text-white"
+                lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
               } text-2xl font-medium`}
             >
               Be Better
@@ -98,7 +98,7 @@ const index = () => {
           </View>
  
           <Slider dataType="intro" activeSlide={activeSlide}  />
-        </View>
+        </Animated.View>
 
         <View className="w-full h-1/5 flex justify-center items-center">
           <View className="h-[40px] w-full flex flex-row justify-center items-center">
@@ -114,7 +114,7 @@ const index = () => {
                   <FontAwesome
                     name="circle"
                     size={10}
-                    color={activeSlide === index ? "orange" : "gray"}
+                    color={activeSlide === index ? "#fb923c" : "gray"}
                   />
                 </Pressable>
               );

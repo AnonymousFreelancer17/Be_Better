@@ -3,6 +3,8 @@ import React from "react";
 import { Animated, Image, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import Fitness from "./AnimationView/Fitness";
+import Nutrition from "./AnimationView/Nutrition";
+import Schedule from "./AnimationView/Schedule";
 
 const SliderElement = ({
   index,
@@ -33,11 +35,11 @@ const SliderElement = ({
         )}
 
          {animation === "nutrition" && (
-          <Fitness lightTheme={lightTheme} />
+          <Nutrition lightTheme={lightTheme} />
         )}
 
          {animation === "schedule" && (
-          <Fitness lightTheme={lightTheme} />
+          <Schedule lightTheme={lightTheme} />
         )}
       </View>
       <View className="w-full flex justify-center items-center">

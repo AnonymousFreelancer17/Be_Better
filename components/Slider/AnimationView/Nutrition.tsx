@@ -1,7 +1,7 @@
 import React from 'react'
 import { Animated, Text } from 'react-native'
 
-const Nutrition = () => {
+const Nutrition = ({lightTheme} : {lightTheme: boolean}) => {
   return (
     <Animated.View>
  

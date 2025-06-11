@@ -37,8 +37,8 @@ const ImageCard = ({
       }
       resizeMode="cover"
     >
-      <View className="bg-black/50 w-full flex-1 flex justify-center items-center">
-        <Text className={`w-10/12 text-center text-orange-200 relative`}>
+      <View className="bg-black/30 w-full flex-1 flex justify-center items-center">
+        <Text className={`w-10/12 font-bold text-center text-dark-primaryText relative`}>
           {text}
         </Text>
         {cancelButtonVisibility && <Pressable
