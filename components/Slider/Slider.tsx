@@ -3,11 +3,8 @@ import React, { useEffect, useRef } from "react";
 import { Animated, Dimensions, Image, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
-
-
 //  importing components ----------------------------------------------------------------------------------------------
 import SliderSection from "../Slider/SliderSection";
-
 
 // --------------------------------------------------------------------------------------
 
@@ -66,7 +63,15 @@ const Slider = ({
       {dataType === "intro" &&
         sliderData?.map((d, index) => {
           return (
-            <SliderSection index={index} screenWidth={screenWidth} line1={d.title.line1} line2={d.title.line2} description={d.description} animation={"fitness"}  />
+            <SliderSection
+              key={index}
+              index={index}
+              screenWidth={screenWidth}
+              line1={d.title.line1}
+              line2={d.title.line2}
+              description={d.description}
+              animation={"fitness"}
+            />
           );
         })}
     </Animated.View>
