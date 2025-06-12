@@ -17,6 +17,7 @@ import {
   getFormattedTime
 } from "../../utils/Calendar";
 import Time from "./Time";
+import GlobalText from "../GlobalUI/GlobalText";
 
 const DaySlider = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
@@ -62,24 +63,13 @@ const DaySlider = () => {
   );
 
   return (
-    <>
-      <View className="mb-2 flex flex-row justify-between items-center px-2">
-        <Text
-          className={`font-bold text-md pt-4 ${
-            lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
-          }`}
-        >
-          Today: {currentDayName}, {currentMonthName} {currentDate}
-        </Text>
+    <View className="w-full flex justify-center items-center">
+      
+      {/*  Header */}
+      <View className="w-full h-[40px] flex flex-row justify-between items-center">
+        <GlobalText fontStyle={"font-bold text-md"} lightTheme={lightTheme} value={`Today: ${currentDayName}, ${currentMonthName} ${currentDate}`} />
 
-        {/* <Text
-          className={` pt-4 ${
-            lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
-          }`}
-        >
-          {currentTime}
-        </Text> */}
-        <Time lightTheme={lightTheme} fontStyle="pt-4 font-bold text-sm" />
+        <Time lightTheme={lightTheme} fontStyle=" font-regular text-sm" />
       </View>
 
       <ScrollView
@@ -131,7 +121,7 @@ const DaySlider = () => {
           );
         })}
       </ScrollView>
-    </>
+    </View>
   );
 };
 

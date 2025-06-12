@@ -44,14 +44,9 @@ const Picker = ({
       </Pressable>
 
       {pickerModalVisibility && (
-        <PickerModal
-          data={data}
-          onSelect={(val: string) => {
-            setPickerModalVisibility(false);
-          }}
-          width={`w-full`}
-          height={`h-[300px]`}
-        />
+          <View className="">
+
+          </View>
       )}
     </>
   );

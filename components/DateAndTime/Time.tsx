@@ -32,7 +32,7 @@ const Time = ({
   return (
     <View>
       <Text
-        className={`${
+        className={`${fontStyle} ${
           lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
         }`}
       >

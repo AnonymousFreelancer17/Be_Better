@@ -10,6 +10,7 @@ import ProgressCard from "./Cards/ProgressCard";
 import ScheduleCard from "./Cards/ScheduleCard";
 import ProductCard from "./Cards/ProductCard";
 import CommunityChallangesCard from "./Cards/CommunityChallangesCard";
+import ScheduleTimeline from "../DateAndTime/ScheduleTimeline";
 
 const Section = ({
   sectionHeight,
@@ -126,7 +127,7 @@ const Section = ({
 
   return (
     <View
-      className={`${sectionHeight} ${sectionWidth} flex flex-col justify-center items-center`}
+      className={`${sectionHeight} ${sectionWidth} flex flex-col justify-center items-center `}
     >
       {/*  header */}
       {sectionHeaderVisibility && <SectionHeader title={sectionHeading} />}
@@ -172,7 +173,7 @@ const Section = ({
                     eventType={d.eventType}
                     time={d.time}
                     action={() => {
-                      setTaskExpandedId(d.id);
+                      setTaskExpandedId((prev) => (prev === d.id ? "" : d.id));
                       setTaskExpanded(!taskExpanded);
                     }}
                     status={d.completionStatus}
@@ -198,10 +199,20 @@ const Section = ({
 
         {sectionType === "community-challanges" && (
           <ScrollView horizontal={true} className="flex-1 ms-4 flex">
-            {[1,2,3,4,5,6,7,8,9].map((d,index)=>{
-              return <CommunityChallangesCard key={index} index={index} lightTheme={lightTheme} />
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d, index) => {
+              return (
+                <CommunityChallangesCard
+                  key={index}
+                  index={index}
+                  lightTheme={lightTheme}
+                />
+              );
             })}
           </ScrollView>
+        )}
+
+        {sectionType === "schedule-timeline" && (
+          <ScheduleTimeline lightTheme={lightTheme} />
         )}
       </View>
 

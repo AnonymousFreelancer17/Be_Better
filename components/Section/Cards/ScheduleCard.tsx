@@ -1,8 +1,26 @@
+import GlobalText from "@/components/GlobalUI/GlobalText";
+import { formatDateTime } from "@/utils/Calendar";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
-const ScheduleCard = ({
+interface ScheduleCardProps {
+  lightTheme: boolean;
+  index: number;
+  taskExpanded: boolean;
+  taskExpandedId: string | null;
+  viewAllEvents: boolean;
+  data: Array<any>;
+  eventType: string;
+  id: string;
+  title: string;
+  time: string;
+  action: () => void;
+  description: string;
+  status: boolean;
+}
+
+const ScheduleCard: React.FC<ScheduleCardProps> = ({
   lightTheme,
   index,
   taskExpanded,
@@ -15,96 +33,107 @@ const ScheduleCard = ({
   time,
   action,
   description,
-  status
-
-}: {
-  lightTheme: boolean;
-  index: number;
-  taskExpanded: boolean;
-  taskExpandedId: string;
-  viewAllEvents: boolean;
-  data: Array<any>;
-  eventType: string;
-  id: string;
-  title: string;
-  time: string;
-  action: any;
-  description: string;
-  status: boolean
+  status,
 }) => {
+  const isExpanded = taskExpandedId === id;
+  const isLast =
+    index === (viewAllEvents ? data.length - 1 : Math.min(data.length - 1, 3));
+  const isFirst = index === 0;
+
+  const formattedDateAndTime = JSON.parse(formatDateTime(time));
+
   return (
     <View
       key={index}
-      className={`w-full ${
-        taskExpanded && id === taskExpandedId ? "h-[120px]" : "h-[60px]"
-      } flex flex-row justify-start items-center bg-red-400
-                        ${
-                          index === (viewAllEvents ? data.length - 1 : 3)
-                            ? "border-0 rounded-br-lg rounded-bl-lg"
-                            : "border-b"
-                        } 
-                        ${index === 0 ? "rounded-tr-lg rounded-tl-lg" : ""} 
-                         
-                        ${
-                          lightTheme
-                            ? "bg-light-surface border-light-border"
-                            : "bg-dark-surface border-dark-border"
-                        }`}
+      className={`w-full ${isExpanded ? "h-[120px]" : "h-[60px]"} 
+        flex flex-row justify-start items-center overflow-hidden
+        ${isLast ? "border-0 rounded-br-lg rounded-bl-lg" : "border-b"}
+        ${isFirst ? "rounded-tr-lg rounded-tl-lg" : ""}
+        ${
+          lightTheme
+            ? "bg-light-surface border-light-border"
+            : "bg-dark-surface border-dark-border"
+        }`}
     >
+      {/* Left section (time + icon) */}
       <View
-        className={`w-[20%] h-full flex flex-col ${taskExpanded ? "justify-center" :"justify-center"} items-center border-r ${
-          lightTheme ? " border-light-border" : " border-dark-border"
+        className={`w-[20%] h-full flex flex-col 
+        ${isExpanded ? "justify-start py-4" : "justify-center"}
+         items-center
+        ${
+          eventType === "fitness"
+            ? "border-s-4 border-fitness-accent"
+            : eventType === "meals"
+            ? "border-s-4 border-nutrition-accent"
+            : "border-s-4 border-schedule-accent"
         }`}
       >
-        <View className="flex flex-row justify-center items-center">
-          {eventType === "fitness" && (
-            <FontAwesome
-              name="heartbeat"
-              color={"#fb923c"}
-              className=" px-2 me-2"
-              size={16}
-            />
-          )}
-          {eventType === "meals" && (
-            <FontAwesome
-              name="cutlery"
-              color={"#fb923c"}
-              className=" px-2 me-2"
-              size={16}
-            />
-          )}
-          {eventType === "schedule" && (
-            <FontAwesome
-              name="clock-o"
-              color={"#fb923c"}
-              className=" px-2 me-2"
-              size={16}
-            />
-          )}
-          <Text
-            className={`${
-              lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
-            }`}
+        <View className="flex-1 flex flex-col justify-center items-center">
+          <View
+            className={`flex flex-row justify-center items-center`}
           >
-            {time.slice(5, 7)}
-          </Text>
-        </View>
-        <View className="w-full flex justify-center items-end px-2 ">
-          <Text
-            className={`font-semibold text-xs ${
-              lightTheme
-                ? "text-light-primaryText border-light-border"
-                : "text-dark-primaryText border-dark-border"
-            }`}
+            <FontAwesome
+              name={
+                eventType === "fitness"
+                  ? "heartbeat"
+                  : eventType === "meals"
+                  ? "cutlery"
+                  : "clock-o"
+              }
+              color={
+                eventType === "fitness"
+                  ? "#34D399"
+                  : eventType === "meals"
+                  ? "#FCD34D"
+                  : "#4F46E5"
+              }
+              size={16}
+              style={{ paddingHorizontal: 8 }}
+            />
+            <GlobalText
+              fontStyle={"text-md font-medium"}
+              lightTheme={lightTheme}
+              value={formattedDateAndTime.day}
+            />
+          </View>
+
+          <View
+            className={`min-w-full px-3 ${
+              isExpanded ? "flex-1" : ""
+            } flex justify-start items-end`}
           >
-            Feb
-          </Text>
+            <GlobalText
+              fontStyle={"text-xs"}
+              lightTheme={lightTheme}
+              value={formattedDateAndTime.month}
+            />
+          </View>
         </View>
+
+        {isExpanded && (
+          <View className="">
+            <GlobalText
+              fontStyle={"text-xs"}
+              lightTheme={lightTheme}
+              value={formattedDateAndTime.time}
+            />
+          </View>
+        )}
       </View>
-      <View className="flex-1 h-full flex flex-row justify-center items-center">
+
+      {/* Right section (content) */}
+      <View
+        className={`
+          flex-1 h-full flex flex-row 
+        ${isExpanded ? "justify-start py-4" : "justify-center"}
+         items-center border-s 
+        ${lightTheme ? "border-light-border" : "border-dark-border"}`}
+      >
         <Pressable
           onPress={action}
-          className="flex-1 flex flex-col justify-start items-center px-1"
+          className={`flex-1 h-full flex flex-col 
+             ${isExpanded ? "justify-start" : "justify-center"} 
+            items-center px-1  `}
         >
           <Text
             className={`w-full font-medium ${
@@ -113,7 +142,7 @@ const ScheduleCard = ({
           >
             {title}
           </Text>
-          {taskExpanded && taskExpandedId === id && (
+          {isExpanded && (
             <Text
               className={`font-light text-xs ${
                 lightTheme ? "text-light-primaryText" : "text-dark-primaryText"
@@ -124,16 +153,17 @@ const ScheduleCard = ({
           )}
         </Pressable>
 
+        {/* Actions */}
         <View className="w-[40%] h-full flex flex-row justify-evenly items-center">
           <Pressable onPress={() => {}}>
-            {status ? (
-              <FontAwesome name="check" color={"#4ade80"} size={14} />
-            ) : (
-              <FontAwesome name="times" color={"#ef4444"} size={14} />
-            )}
+            <FontAwesome
+              name={status ? "check" : "times"}
+              color={status ? "#4ade80" : "#ef4444"}
+              size={14}
+            />
           </Pressable>
           <Pressable onPress={() => {}}>
-            <FontAwesome name="times" color={"#ef4444"} size={14} />
+            <FontAwesome name="times" color="#ef4444" size={14} />
           </Pressable>
           <Pressable onPress={() => {}}>
             <FontAwesome

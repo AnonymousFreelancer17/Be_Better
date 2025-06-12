@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}","./components/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
@@ -30,26 +30,33 @@ module.exports = {
           success: "#34D399",
         },
         fitness: {
-          primary: "#10B981",        // Emerald Green (active/positive)
-          secondary: "#D1FAE5",      // Light Green (surface)
-          textPrimary: "#064E3B",    // Dark Green
-          textSecondary: "#6EE7B7",  // Mint Green (secondary text)
+          primary: "#10B981", 
+          secondary: "#D1FAE5",  
+          textPrimary: "#064E3B", 
+          textSecondary: "#6EE7B7", 
+          accent: "#34D399",
+          background: "#ECFDF5", 
         },
+
         nutrition: {
-          primary: "#F59E0B",        // Amber (nutritional alert)
-          secondary: "#FEF3C7",      // Light Amber (background/surface)
-          textPrimary: "#78350F",    // Brownish text
-          textSecondary: "#FBBF24",  // Bright yellow (subtext)
+          primary: "#F59E0B", 
+          secondary: "#FEF3C7", 
+          textPrimary: "#78350F", 
+          textSecondary: "#FBBF24", 
+          accent: "#FCD34D",  
+          background: "#FFF7ED", 
         },
+
         schedule: {
-          primary: "#6366F1",        // Indigo (calendar/scheduling)
-          secondary: "#E0E7FF",      // Light Indigo
-          textPrimary: "#1E3A8A",    // Deep Blue (titles)
-          textSecondary: "#A5B4FC",  // Soft Blue (subtext)
+          primary: "#6366F1",
+          secondary: "#E0E7FF", // Light Indigo (surface/background)
+          textPrimary: "#1E3A8A", // Deep Blue (titles and headers)
+          textSecondary: "#A5B4FC", // Soft Blue (subtext)
+          accent: "#4F46E5", // Indigo for buttons/CTA
+          background: "#EEF2FF", // Soft bluish background
         },
       },
     },
   },
   plugins: [],
 };
-
