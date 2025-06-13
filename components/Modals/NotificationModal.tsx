@@ -1,14 +1,21 @@
 import { toggleNotificationModalVisibility } from "@/store/slices/settingSlice";
 import { RootState } from "@/store/store";
 import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CloseButton from "../Buttons/CloseButton";
 import Picker from "../Picker/Picker";
 import NotificationCard from "@/components/NotificationModal/NotificationCard";
 import GlobalText from "../GlobalUI/GlobalText";
 
-// Define strict SenderType and related types
+// Types
 type SenderType = "system" | "bot" | "user" | "community";
 
 type Sender = {
@@ -33,7 +40,31 @@ type Notification = {
 const NotificationModal = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
   const dispatch = useDispatch();
+  const [pickerModalVisibility, setPickerModalVisibility] = useState(false);
+  const [selectedFilterGroup, setSelectedFilterGroup] = useState<number>(-1);
+
   const [activeFilter, setActiveFilter] = useState("unread");
+  const [pickerSelections, setPickerSelections] = useState<string[]>([
+    "Unread",
+    "High Priority",
+    "Fitness",
+    "Likes",
+    "Today",
+  ]);
+
+  const filterGroups = [
+    ["Unread", "Read", "All"],
+    ["High Priority", "Normal", "Low"],
+    ["Fitness", "Nutrition", "Schedule"],
+    ["Likes", "Comments", "Mentions", "Follow"],
+    ["Today", "Last 7 days", "This month", "Custom date range"],
+  ];
+
+  const handlePickerChange = (index: number, value: string) => {
+    const newSelections = [...pickerSelections];
+    newSelections[index] = value;
+    setPickerSelections(newSelections);
+  };
 
   const mockData: Notification[] = [
     {
@@ -48,8 +79,8 @@ const NotificationModal = () => {
       sender: {
         id: "system_fitness",
         name: "Fitness Scheduler",
-        type: "system"
-      }
+        type: "system",
+      },
     },
     {
       id: "notif_002",
@@ -63,8 +94,8 @@ const NotificationModal = () => {
       sender: {
         id: "system_nutrition",
         name: "Nutrition Tracker",
-        type: "system"
-      }
+        type: "system",
+      },
     },
     {
       id: "notif_003",
@@ -75,11 +106,7 @@ const NotificationModal = () => {
       timestamp: "2025-06-11T06:00:00Z",
       isRead: true,
       relatedTo: "Daily Diet Plan",
-      sender: {
-        id: "diet_bot",
-        name: "Diet Planner AI",
-        type: "bot"
-      }
+      sender: { id: "diet_bot", name: "Diet Planner AI", type: "bot" },
     },
     {
       id: "notif_009",
@@ -94,8 +121,8 @@ const NotificationModal = () => {
         id: "user_104",
         name: "John Doe",
         profilePic: "https://example.com/profiles/john.png",
-        type: "user"
-      }
+        type: "user",
+      },
     },
     {
       id: "notif_010",
@@ -109,8 +136,8 @@ const NotificationModal = () => {
       sender: {
         id: "group_123",
         name: "Wellness Community",
-        type: "community"
-      }
+        type: "community",
+      },
     },
     {
       id: "notif_011",
@@ -125,31 +152,74 @@ const NotificationModal = () => {
         id: "user_203",
         name: "Priya Sharma",
         profilePic: "https://example.com/profiles/priya.png",
-        type: "user"
-      }
-    }
+        type: "user",
+      },
+    },
   ];
 
-  
+  const applyFilters = (notifications: Notification[]) => {
+    return notifications.filter((notif) => {
+      const [
+        readFilter,
+        priorityFilter,
+        categoryFilter,
+        typeFilter,
+        timeFilter,
+      ] = pickerSelections;
 
-  const filters = [
-    ["Unread", "Read", "All"],
-    ["High Priority", "Normal", "Low"],
-    ["Fitness", "Nutrition", "Schedule"],
-    ["Likes", "Comments", "Mentions", "Follow"],
-    ["Today", "Last 7 days", "This month", "Custom date range"]
-  ];
+      // Filter 1: Read status
+      const matchesRead =
+        readFilter === "All" ||
+        (readFilter === "Unread" && !notif.isRead) ||
+        (readFilter === "Read" && notif.isRead);
+
+      // Filter 2: Priority - optional logic based on message content or type
+      const matchesPriority =
+        priorityFilter === "Normal" || // default
+        (priorityFilter === "High Priority" &&
+          ["alert", "reminder"].includes(notif.type)) ||
+        (priorityFilter === "Low" &&
+          ["update", "post_update", "dm"].includes(notif.type));
+
+      // Filter 3: Category match
+      const matchesCategory =
+        categoryFilter === "All" ||
+        notif.category.toLowerCase() === categoryFilter.toLowerCase();
+
+      // Filter 4: Type (for example: "Likes", "Comments", etc.)
+      const matchesType =
+        typeFilter === "All" ||
+        notif.type.toLowerCase().includes(typeFilter.toLowerCase());
+
+      // Filter 5: Time (basic date comparison)
+      const notifDate = new Date(notif.timestamp);
+      const now = new Date();
+      const matchesTime =
+        timeFilter === "Today"
+          ? notifDate.toDateString() === now.toDateString()
+          : timeFilter === "Last 7 days"
+          ? (now.getTime() - notifDate.getTime()) / (1000 * 60 * 60 * 24) <= 7
+          : timeFilter === "This month"
+          ? notifDate.getMonth() === now.getMonth() &&
+            notifDate.getFullYear() === now.getFullYear()
+          : true; // 'Custom date range' or All
+
+      return (
+        matchesRead &&
+        matchesPriority &&
+        matchesCategory &&
+        matchesType &&
+        matchesTime
+      );
+    });
+  };
 
   return (
     <View className="w-screen h-[100vh] flex justify-center items-center">
       <TouchableOpacity
-        className="w-screen h-full flex justify-end items-end backdrop-blur-md bg-black/80 absolute top-0 z-30"
-        onPress={() => {
-          dispatch(toggleNotificationModalVisibility());
-        }}
-      >
-        <View />
-      </TouchableOpacity>
+        className="w-screen h-full absolute top-0 z-30 bg-black/80"
+        onPress={() => dispatch(toggleNotificationModalVisibility())}
+      />
 
       <View
         className={`${
@@ -159,49 +229,87 @@ const NotificationModal = () => {
         <CloseButton
           pressableStyle="top-0 right-0 absolute z-30 p-2"
           imageStyle=""
-          action={() => {
-            dispatch(toggleNotificationModalVisibility());
-          }}
+          action={() => dispatch(toggleNotificationModalVisibility())}
         />
 
-        <View className="w-full h-full relative flex flex-1 flex-col justify-start items-center">
+        <View className="w-full h-full flex flex-col items-center">
+          {/* Header */}
           <View
-            className={`w-full h-[40px] flex justify-center items-center border-b ${
+            className={`w-full h-[40px] justify-center items-center border-b ${
               lightTheme ? "border-light-border" : "border-dark-border"
             }`}
           >
             <GlobalText
-              fontStyle=""
+              fontStyle="text-lg font-semibold"
               value="Notifications"
               lightTheme={lightTheme}
             />
           </View>
 
-          <ScrollView
-            className="flex-1 w-full relative"
-            horizontal={false}
-            showsVerticalScrollIndicator
-          >
-            {/* Filter View */}
+          <View className="w-full bg-purple-400 flex-1 flex flex-col justify-start items-center">
+            {/* Filter Picker Row */}
             <ScrollView
               horizontal
-              className="w-full fixed top-0 flex flex-row ms-2 py-2"
+              className=" py-2"
+              showsHorizontalScrollIndicator={false}
             >
-              {filters.map((d, index) => (
+              {filterGroups.map((filterOptions, index) => (
                 <Picker
                   key={index}
                   height="h-[30px]"
-                  width="w-auto"
-                  data={d}
+                  width=""
+                  data={filterOptions}
+                  pickerModalVisibility={pickerModalVisibility}
+                  selectedValue={pickerSelections[index]}
+                  action={() => {
+                    const isSameGroup = selectedFilterGroup === index;
+                    setPickerModalVisibility(
+                      !pickerModalVisibility || !isSameGroup
+                    );
+                    setSelectedFilterGroup(isSameGroup ? -1 : index);
+                  }}
+                  onValueChange={(value: string) => {
+                    handlePickerChange(index, value);
+                    setPickerModalVisibility(false);
+                    setSelectedFilterGroup(-1);
+                  }}
                 />
               ))}
             </ScrollView>
 
-            {/* Notification Cards */}
-            <View className="w-full flex-1 flex justify-start items-center">
-              {mockData.map((d, index) => (
+            {pickerModalVisibility && selectedFilterGroup !== -1 && (
+              <ScrollView
+                horizontal
+                className="w-full h-[60px] px-2 pb-2"
+              >
+                <View className="w-full h-full flex-row">
+                  {filterGroups[selectedFilterGroup]?.map((item, idx) => (
+                    <Pressable
+                      key={idx}
+                      onPress={() => {
+                        handlePickerChange(selectedFilterGroup, item);
+                        setActiveFilter(item.toLowerCase());
+                        setPickerModalVisibility(false);
+                        setSelectedFilterGroup(-1);
+                      }}
+                      className="border rounded-md px-4 py-2 me-2"
+                    >
+                      <GlobalText
+                        fontStyle="text-sm"
+                        lightTheme={lightTheme}
+                        value={item}
+                      />
+                    </Pressable>
+                  ))}
+                </View>
+              </ScrollView>
+            )}
+
+            {/* Notifications */}
+            <ScrollView horizontal={false} showsHorizontalScrollIndicator className="flex-1 ">  
+              {mockData?.map((d, index) => (
                 <NotificationCard
-                  key={index}
+                  key={d.id}
                   index={index}
                   lightTheme={lightTheme}
                   isRead={d.isRead}
@@ -215,8 +323,8 @@ const NotificationModal = () => {
                   sender={d.sender}
                 />
               ))}
-            </View>
-          </ScrollView>
+            </ScrollView>
+          </View>
         </View>
       </View>
     </View>

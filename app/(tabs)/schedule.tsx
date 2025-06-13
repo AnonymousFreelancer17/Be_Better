@@ -13,6 +13,14 @@ const Schedule = () => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
   const [selectedDate, setSelectedDate] = useState("");
 
+  const tabs = [
+    "Calendar View",
+    "Task Management",
+    "Reminder & Alerts",
+    "Routine Tracker & Improvement Tips",
+    "Notes & Attachments",
+  ];
+
   return (
     <SafeAreaView
       className={`w-screen flex flex-1 justify-start items-center ${
@@ -20,9 +28,20 @@ const Schedule = () => {
       }`}
     >
       <Header route={"Schedule"} />
-      <ScrollView horizontal={false} className="w-11/12 flex flex-1 h-auto">
-        <DaySlider />
 
+      <ScrollView horizontal={false} className="w-full flex flex-1 h-auto">
+        <Section
+          sectionHeight={"flex-1"}
+          sectionWidth={"w-full"}
+          sectionHeading="Schedule"
+          sectionFooterVisibility={false}
+          sectionFooterButtonVisibility={true}
+          sectionType="progress-board"
+          sectionHeaderVisibility={true}
+          sectionFooterAction={() => {}}
+          sectionFooterButtonText="View More"
+        ></Section>
+        <DaySlider />
         <Section
           sectionHeight={"flex-1"}
           sectionWidth={"w-full"}

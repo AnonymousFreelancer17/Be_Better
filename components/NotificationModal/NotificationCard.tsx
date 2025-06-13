@@ -42,10 +42,18 @@ const NotificationCard = ({
   return (
     <TouchableOpacity
       key={index}
-      className={`w-11/12 min-h-[80px] px-3 py-2 my-1 rounded-xl flex-row items-center justify-between 
+      className={`w-11/12 min-h-[80px] px-3 py-2 my-1 rounded-xl flex-row items-center justify-between border-s-4
+       ${
+         category === "fitness"
+           ? "border-fitness-accent"
+           : category === "nutrition"
+           ? "border-nutrition-accent"
+           : category === "schedule"
+           ? "border-schedule-accent"
+           : ""
+       } 
       ${lightTheme ? "bg-light-background" : "bg-dark-background"}
-      ${index === 0 ? "border-t border-b" : "border-b"}
-      ${lightTheme ? "border-light-border" : "border-dark-border"}`}
+       border-t border-b`}
     >
       {/* Sender Icon or Image */}
       <View

@@ -32,7 +32,7 @@ const MenuBar = () => {
     <View
       className={`${
         lightTheme ? "bg-light-background" : "bg-dark-background"
-      } w-3/4 flex justify-start items-center z-40 p-2`}
+      } w-3/4 flex justify-start items-center z-50 p-2`}
       style={{
         position: "absolute",
         top: 63,

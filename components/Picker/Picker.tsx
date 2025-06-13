@@ -4,27 +4,32 @@ import React, { useState, useEffect } from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import PickerModal from "../Modals/PickerModal";
+import GlobalText from "../GlobalUI/GlobalText";
 
 const Picker = ({
   height,
   width,
   data,
+  selectedValue,
+  pickerModalVisibility,
+  action,
+  onValueChange,
 }: {
   height: string;
   width: string;
-  data: string[]; // assuming array of strings
+  data: string[];
+  selectedValue: string;
+  pickerModalVisibility: boolean;
+  action: any;
+  onValueChange: any;
 }) => {
-  const [pickerModalVisibility, setPickerModalVisibility] = useState(false);
   const { lightTheme } = useSelector((state: RootState) => state.setting);
-  const [selectedValue, setSelectedValue] = useState([...data][0]);
 
   return (
-    <>
+ 
       <Pressable
-        onPress={() => {
-          setPickerModalVisibility(true);
-        }}
-        className={`px-4 me-2 ${height} flex flex-row justify-between items-center rounded-full border ${
+        onPress={action}
+        className={`px-4 me-2 ${height} flex flex-row justify-between items-center rounded-full relative border ${
           lightTheme ? "border-light-border" : "border-dark-border"
         }`}
       >
@@ -42,13 +47,7 @@ const Picker = ({
           color={lightTheme ? "gray" : "white"}
         />
       </Pressable>
-
-      {pickerModalVisibility && (
-          <View className="">
-
-          </View>
-      )}
-    </>
+ 
   );
 };
 

@@ -66,7 +66,7 @@ const DaySlider = () => {
     <View className="w-full flex justify-center items-center">
       
       {/*  Header */}
-      <View className="w-full h-[40px] flex flex-row justify-between items-center">
+      <View className="w-11/12 h-[40px] flex flex-row justify-between items-center">
         <GlobalText fontStyle={"font-bold text-md"} lightTheme={lightTheme} value={`Today: ${currentDayName}, ${currentMonthName} ${currentDate}`} />
 
         <Time lightTheme={lightTheme} fontStyle=" font-regular text-sm" />
@@ -75,7 +75,7 @@ const DaySlider = () => {
       <ScrollView
         horizontal
         ref={scrollRef}
-        className={`mt-3 h-[100px] flex flex-row w-full border-b pb-2 ${
+        className={`w-11/12 mt-3 h-[100px] flex flex-row border-b pb-2 ${
           lightTheme ? "border-light-border" : "border-dark-border"
         }`}
       >

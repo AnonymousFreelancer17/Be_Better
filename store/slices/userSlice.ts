@@ -18,6 +18,15 @@ interface UserProfile {
   climate: string;
 }
 
+interface DefaultBoards {
+  id: string;
+  title: "fitness" | "nutrition" | "schedule";
+  tasksPending: Array<any>;
+  eventsPending: Array<any>;
+
+
+}
+
 const initialState: UserProfile = {
   id: '',
   name: '',

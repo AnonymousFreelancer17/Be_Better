@@ -9,9 +9,7 @@ const SectionHeading = ({ title }: { title: any }) => {
 
   return (
     <View
-      className={`${
-        title === "Task on timeline" ? "w-full" : "w-11/12"
-      } flex flex-row justify-between items-center h-[40px]`}
+      className={`w-11/12 flex flex-row justify-between items-center h-[40px]`}
     >
       <GlobalText
         fontStyle="font-medium"
