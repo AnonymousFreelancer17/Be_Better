@@ -23,6 +23,8 @@ import userReducer from "./slices/userSlice";
 import scheduleReducer from "./slices/scheduleSlice";
 import nutritionReducer from "./slices/nutritionSlice";
 import progressReducer from "./slices/progressSlice";
+import modalReducer from "./slices/modalSlice";
+
 
 
 
@@ -40,6 +42,7 @@ const rootReducer = combineReducers({
   schedule : scheduleReducer,
   nutrition: nutritionReducer,
   progress: progressReducer,
+  modal: modalReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

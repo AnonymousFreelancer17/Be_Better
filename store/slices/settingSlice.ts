@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface SettingState {
   lightTheme: boolean;
-  notificationVisibility: boolean;
   language: string;
   soundEnabled: boolean;
   autoSync: boolean;
@@ -14,7 +13,6 @@ interface SettingState {
 
 const initialState: SettingState = {
   lightTheme: false,
-  notificationVisibility: false,
   language: 'en',
   soundEnabled: true,
   autoSync: true,
@@ -29,9 +27,6 @@ const settingSlice = createSlice({
   reducers: {
     toggleTheme: (state) => {
       state.lightTheme = !state.lightTheme;
-    },
-    toggleNotificationModalVisibility: (state) => {
-      state.notificationVisibility = !state.notificationVisibility;
     },
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;
@@ -57,7 +52,6 @@ const settingSlice = createSlice({
 
 export const {
   toggleTheme,
-  toggleNotificationModalVisibility,
   setLanguage,
   toggleSound,
   toggleAutoSync,

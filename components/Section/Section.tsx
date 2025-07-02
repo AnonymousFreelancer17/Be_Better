@@ -137,19 +137,24 @@ const Section = ({
         {sectionType === "progress-board" && (
           <View className="w-11/12 h-[200px] flex flex-row justify-center items-center flex-wrap">
             {[
-              [1, 2, 3],
-              [1, 2],
-              [1, 2],
-              [1, 2, 3],
-            ]?.map((d, index) => {
-              return (
-                <ProgressCard
-                  key={index}
-                  lightTheme={lightTheme}
-                  index={index}
-                />
-              );
-            })}
+              { id: 1,
+                title: "Today's Overview" },
+              {
+                id: 2,
+                title: "",
+              },
+              { id: 3,
+                title: "" },
+              { id: 4,
+                title: "" },
+            ].map((_, index: number) => (
+              <ProgressCard
+                key={index}
+                sectionHeading={sectionHeading}
+                lightTheme={lightTheme}
+                index={index}
+              />
+            ))}
           </View>
         )}
 

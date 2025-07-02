@@ -1,72 +1,46 @@
-// src/features/auth/fitnessSlice.ts
+// src/features/auth/modalSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type ModalState = {
   isLoading: boolean;
-  getInfoModal: 
+  getInfoModal: boolean;
+  createTasksOnTimlineModal: boolean,
+  notificationVisibility: boolean;
+  sidebarVisibility: boolean;
 };
 
 const initialState: ModalState = {
   isLoading: false,
-  generateFitnessRegime: false,
-  regimeType: 'home',
-  regimeDuration: 30,
-  fitnessLevel: 'beginner',
-  goals: [],
-  generatedPlan: null,
-  lastUpdated: null,
-  error: null,
+  getInfoModal: false,
+  createTasksOnTimlineModal: false,
+  notificationVisibility: false,
+  sidebarVisibility: false,
 };
 
-const fitnessSlice = createSlice({
-  name: "fitness",
+const modalSlice = createSlice({
+  name: "modal",
   initialState,
   reducers: {
     setLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
-    toggleFitnessRegime(state) {
-      state.generateFitnessRegime = !state.generateFitnessRegime;
+    toggleCreateTasksModal(state,action:PayloadAction<boolean>){
+      state.createTasksOnTimlineModal =  !state.createTasksOnTimlineModal;
     },
-    setFitnessRegime(state, action: PayloadAction<boolean>) {
-      state.generateFitnessRegime = action.payload;
+     toggleNotificationModalVisibility: (state) => {
+      state.notificationVisibility = !state.notificationVisibility;
     },
-    setRegimeType(state, action: PayloadAction<FitnessState["regimeType"]>) {
-      state.regimeType = action.payload;
-    },
-    setRegimeDuration(state, action: PayloadAction<number>) {
-      state.regimeDuration = action.payload;
-    },
-    setFitnessLevel(state, action: PayloadAction<FitnessState["fitnessLevel"]>) {
-      state.fitnessLevel = action.payload;
-    },
-    setGoals(state, action: PayloadAction<string[]>) {
-      state.goals = action.payload;
-    },
-    setGeneratedPlan(state, action: PayloadAction<any>) {
-      state.generatedPlan = action.payload;
-      state.lastUpdated = new Date().toISOString();
-    },
-    setError(state, action: PayloadAction<string | null>) {
-      state.error = action.payload;
-    },
-    resetFitnessState() {
-      return initialState;
-    },
-  },
+    toggleSidebarVisibility: (state) =>{
+      state.sidebarVisibility = !state.sidebarVisibility;
+    }
+  }
 });
 
 export const {
   setLoading,
-  toggleFitnessRegime,
-  setFitnessRegime,
-  setRegimeType,
-  setRegimeDuration,
-  setFitnessLevel,
-  setGoals,
-  setGeneratedPlan,
-  setError,
-  resetFitnessState,
-} = fitnessSlice.actions;
+  toggleNotificationModalVisibility,
+  toggleCreateTasksModal,
+  toggleSidebarVisibility,
+} = modalSlice.actions;
 
-export default fitnessSlice.reducer;
+export default modalSlice.reducer;

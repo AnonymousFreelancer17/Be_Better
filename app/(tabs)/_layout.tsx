@@ -5,17 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUserInfo } from "@/store/slices/AuthSlice";
 import { RootState } from "@/store/store";
 import axios from "axios";
+import Sidebar from "@/components/Sidebar/Sidebar";
+import { Text, View } from "react-native";
 
 const _layout = () => {
-  const { isAuthenticated, user, token } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated, user, token } = useSelector(
+    (state: RootState) => state.auth
+  );
   const { lightTheme } = useSelector((state: RootState) => state.setting);
+  const { sidebarVisibility } = useSelector((state: RootState) => state.modal);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (!token) return;
-  
+
       try {
         const res = await axios.post(
           `${process.env.EXPO_PUBLIC_BACKEND_URL}/auth/getUserDetails`,
@@ -26,21 +31,21 @@ const _layout = () => {
             },
           }
         );
-        dispatch(fetchUserInfo({
-          id: res.data.data._id,
-          name: res.data.data.userName,
-          email: res.data.data.email,
-          profilePic: res.data.data.profilePic,
-        }));
-        
+        dispatch(
+          fetchUserInfo({
+            id: res.data.data._id,
+            name: res.data.data.userName,
+            email: res.data.data.email,
+            profilePic: res.data.data.profilePic,
+          })
+        );
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
     };
-  
+
     fetchUserDetails();
   }, [token, dispatch]);
-  
 
   if (!isAuthenticated) {
     return <Redirect href="/auth/login" />;
@@ -53,7 +58,7 @@ const _layout = () => {
         tabBarActiveTintColor: "#fb923c",
         tabBarInactiveTintColor: lightTheme ? "gray" : "#fff",
         tabBarStyle: {
-          backgroundColor: lightTheme ? "#FFFFFF" : "#0F172A" ,
+          backgroundColor: lightTheme ? "#FFFFFF" : "#0F172A",
           borderColor: lightTheme ? "#D1D5DB" : "#475569",
         },
       }}
@@ -108,7 +113,7 @@ const _layout = () => {
             <FontAwesome name="clock-o" size={24} color={color} />
           ),
         }}
-      />    
+      />
     </Tabs>
   );
 };

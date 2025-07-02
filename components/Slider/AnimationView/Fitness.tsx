@@ -1,3 +1,4 @@
+import CircularProgress from "@/components/ProgressUI/CircularProgress";
 import React from "react";
 import { Animated, Image, Text, View } from "react-native";
 
@@ -73,27 +74,7 @@ const Fitness = ({ lightTheme }: { lightTheme: boolean }) => {
                 </View>
 
                 <View className="w-auto h-full flex justify-center items-center relative">
-                  <View className="absolute z-30 flex justify-center items-center">
-                    <View
-                      className={`w-[30px] h-[30px] rounded-full bg-transparent border-2 absolute ${
-                        lightTheme
-                          ? "border-light-border"
-                          : "border-dark-border"
-                      }`}
-                    ></View>
-                    <View className="w-[30px] h-[30px] rounded-full absolute border-2 border-green-400 z-10"></View>
-                  </View>
-                  <View className="relative">
-                    <Text
-                      className={`font-medium text-xs ${
-                        lightTheme
-                          ? "text-light-primaryText"
-                          : "text-dark-primaryText"
-                      }`}
-                    >
-                      60%
-                    </Text>
-                  </View>
+                   <CircularProgress radius={15} strokeWidth={2} max={100} value={60} lightTheme={lightTheme} />
                 </View>
               </View>
             </View>
