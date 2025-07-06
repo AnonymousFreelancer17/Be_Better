@@ -3,6 +3,8 @@ import React from "react";
 import { Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import GlobalText from "../GlobalUI/GlobalText";
+import DropdownButton from "../DropdownButton/DropdownButton";
+import { ChevronDown, Filter } from "lucide-react-native";
 
 const SectionHeading = ({ title }: { title: any }) => {
   const { lightTheme } = useSelector((state: RootState) => state.setting);
@@ -22,6 +24,15 @@ const SectionHeading = ({ title }: { title: any }) => {
           fontStyle={""}
           lightTheme={lightTheme}
           value="Set interval"
+        />
+      )}
+
+      {title === "Upcoming Events and Tasks" && (
+        <DropdownButton
+          lightTheme={lightTheme}
+          options={[]}
+          buttonContent={<Filter color={lightTheme ? "gray" : "white"} />}
+          endContent={undefined}
         />
       )}
     </View>

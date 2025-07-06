@@ -42,7 +42,7 @@ const NotificationCard = ({
   return (
     <TouchableOpacity
       key={index}
-      className={`w-11/12 min-h-[80px] px-3 py-2 my-1 rounded-xl flex-row items-center justify-between border-s-4
+      className={`w-[92vw] min-h-[80px] px-3 py-2 my-1 rounded-xl flex-row items-center justify-between border-s-4
        ${
          category === "fitness"
            ? "border-fitness-accent"

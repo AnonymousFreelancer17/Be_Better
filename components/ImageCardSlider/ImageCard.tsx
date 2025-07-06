@@ -1,4 +1,5 @@
 import { RootState } from "@/store/store";
+import { CrossIcon } from "lucide-react-native";
 import React from "react";
 import { Image, ImageBackground, Pressable, Text, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -12,7 +13,7 @@ const ImageCard = ({
   cardMarginTop,
   cardStyles,
   cardMarginX,
-  cancelButtonVisibility
+  cancelButtonVisibility,
 }: {
   action: any;
   cardStyles: string;
@@ -27,7 +28,7 @@ const ImageCard = ({
   const { lightTheme } = useSelector((state: RootState) => state.setting);
 
   return (
-     <ImageBackground
+    <ImageBackground
       className={`rounded-xl flex justify-center items-center mb-1 overflow-hidden ${cardHeight} ${cardWidth} ${cardMarginX} ${cardMarginTop} ${cardStyles} ${
         lightTheme ? "bg-light-card" : "bg-dark-card"
       }`}
@@ -38,24 +39,23 @@ const ImageCard = ({
       resizeMode="cover"
     >
       <View className="bg-black/30 w-full flex-1 flex justify-center items-center">
-        <Text className={`w-10/12 font-bold text-center text-dark-primaryText relative`}>
+        <Text
+          className={`w-10/12 font-bold text-center text-dark-primaryText relative`}
+        >
           {text}
         </Text>
-        {cancelButtonVisibility && <Pressable
-          className="absolute top-0 right-0 z-10 m-2 p-2"
-          onPress={() => {
-            action();
-          }}
-        >
-          {!lightTheme ? (
-            <Image source={require("../../assets/images/close-light.png")} />
-          ) : (
-            <Image source={require("../../assets/images/close_dark.png")} />
-          )}
-        </Pressable>}
+        {cancelButtonVisibility && (
+          <Pressable
+            className="absolute top-0 right-0 z-10 m-2 p-2"
+            onPress={() => {
+              action();
+            }}
+          >
+            <CrossIcon color={lightTheme ? "gray" : "white"} size={16} />
+          </Pressable>
+        )}
       </View>
     </ImageBackground>
-    
   );
 };
 

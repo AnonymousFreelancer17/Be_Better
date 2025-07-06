@@ -1,4 +1,4 @@
-import { toggleNotificationModalVisibility } from "@/store/slices/settingSlice";
+import { toggleNotificationModalVisibility } from "@/store/slices/modalSlice";
 import { RootState } from "@/store/store";
 import React, { useState } from "react";
 import {
@@ -246,7 +246,7 @@ const NotificationModal = () => {
             />
           </View>
 
-          <View className="w-full bg-purple-400 flex-1 flex flex-col justify-start items-center">
+          <View className="flex-1 flex flex-col justify-center items-center">
             {/* Filter Picker Row */}
             <ScrollView
               horizontal
@@ -280,9 +280,12 @@ const NotificationModal = () => {
             {pickerModalVisibility && selectedFilterGroup !== -1 && (
               <ScrollView
                 horizontal
-                className="w-full h-[60px] px-2 pb-2"
-              >
-                <View className="w-full h-full flex-row">
+                className="w-[92vw] h-[50px] flex flex-row"
+                contentContainerStyle={{
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+                >
                   {filterGroups[selectedFilterGroup]?.map((item, idx) => (
                     <Pressable
                       key={idx}
@@ -292,7 +295,7 @@ const NotificationModal = () => {
                         setPickerModalVisibility(false);
                         setSelectedFilterGroup(-1);
                       }}
-                      className="border rounded-md px-4 py-2 me-2"
+                      className="border rounded-md flex justify-center items-center px-4 h-[30px] me-2"
                     >
                       <GlobalText
                         fontStyle="text-sm"
@@ -301,12 +304,12 @@ const NotificationModal = () => {
                       />
                     </Pressable>
                   ))}
-                </View>
+                
               </ScrollView>
             )}
 
             {/* Notifications */}
-            <ScrollView horizontal={false} showsHorizontalScrollIndicator className="flex-1 ">  
+            <ScrollView horizontal={false} showsHorizontalScrollIndicator className="w-full ">  
               {mockData?.map((d, index) => (
                 <NotificationCard
                   key={d.id}

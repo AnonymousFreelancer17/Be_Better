@@ -1,20 +1,13 @@
-import React from 'react'
-import { ImageBackground, Text, View } from 'react-native'
- 
+import React from "react";
+import { ImageBackground, Text, View } from "react-native";
+import GlobalText from "../GlobalUI/GlobalText";
 
-const SidebarHeader = () => {
+const SidebarHeader = ({ lightTheme }: { lightTheme: boolean }) => {
   return (
-    
-      <View className='w-full'>
-        <Text>
-          SidebaHeader
-        </Text>
-      </View>
-      // <ImageBackground source={require('../../assets/images/splash-icon.png')} className='w-full flex justify-center items-center'>
-            
-      // </ImageBackground>
-      
-  )
-}
+    <View className="w-full">
+      <GlobalText lightTheme={lightTheme}  fontStyle={""} value={"Sidebar"}></GlobalText>
+    </View>
+  );
+};
 
-export default SidebarHeader
+export default SidebarHeader;

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import {  ScrollView, View } from "react-native";
+
+//  importing redux
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+
 //  importing components
 import SectionHeader from "./SectionHeader";
 import SectionFooter from "./SectionFooter";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import ProgressCard from "./Cards/ProgressCard";
 import ScheduleCard from "./Cards/ScheduleCard";
 import ProductCard from "./Cards/ProductCard";
@@ -203,12 +205,13 @@ const Section = ({
         )}
 
         {sectionType === "community-challanges" && (
-          <ScrollView horizontal={true} className="flex-1 ms-4 flex">
+          <ScrollView horizontal={true} className="w-11/12 flex overflow-hidden rounded-md">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d, index) => {
               return (
                 <CommunityChallangesCard
                   key={index}
                   index={index}
+                  radius={"rounded-md"}
                   lightTheme={lightTheme}
                 />
               );
@@ -232,7 +235,7 @@ const Section = ({
               : sectionFooterAction
           }
           buttonVisibility={sectionFooterButtonVisibility}
-          buttonText={sectionFooterButtonText}
+          buttonText={viewAllEvents? "View less" :sectionFooterButtonText}
         />
       )}
     </View>

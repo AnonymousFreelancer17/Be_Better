@@ -4,9 +4,8 @@ import { Text, View } from "react-native";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, router } from "expo-router";
-
+import {toggleNotificationModalVisibility} from "@/store/slices/modalSlice";
 import {
-  toggleNotificationModalVisibility,
   toggleTheme,
 } from "@/store/slices/settingSlice";
 import { logout } from "@/store/slices/AuthSlice";
@@ -20,7 +19,7 @@ const MenuBar = () => {
   const { isAuthenticated, token, user } = useSelector(
     (state: RootState) => state.auth
   );
-  const { lightTheme, notificationVisibility } = useSelector(
+  const { lightTheme } = useSelector(
     (state: RootState) => state.setting
   );
   const [showMenuBar, setShowMenuBar] = useState(false);

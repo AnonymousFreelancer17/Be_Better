@@ -47,7 +47,7 @@ const ImageCardSlider = () => {
           return (
             <ImageCard
               key={index}
-              cardHeight="h-[180px]"
+              cardHeight="h-[150px]"
               cardWidth="w-[90vw]"
               cardMarginTop="0"
               cardStyles={""}
@@ -68,7 +68,7 @@ const ImageCardSlider = () => {
           return (
             <Pressable
               key={index}
-              className="mx-1 p-2"
+              className="mx-1"
               onPress={() => {
                 setActive(index);
               }}
@@ -79,7 +79,7 @@ const ImageCardSlider = () => {
                   lightTheme
                     ? active === index
                       ? "#fb923c"
-                      : "gray"
+                      : "white"
                     : active === index
                     ? "#fb923c"
                     : "white"
